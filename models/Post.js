@@ -1,7 +1,7 @@
 const {Schema,model} =require('mongoose')
 
 /**
- * database model for Post
+ * database model for the Post
  */
 const PostSchema =new Schema({
 
