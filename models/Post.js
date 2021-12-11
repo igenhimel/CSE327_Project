@@ -1,6 +1,8 @@
 const {Schema,model} =require('mongoose')
 
-
+/**
+ * database model for post
+ */
 const PostSchema =new Schema({
 
     title:{
