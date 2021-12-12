@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const setRoutes = require('./routes/routes')
+const setMiddleWare = require('./middleware/middlewares')
 const config = require('config')
 const app = express()
 
@@ -12,9 +14,44 @@ app.set('views', 'views')
 
 
 
+/**
+ * Middleware
+ */
+
+setMiddleWare(app)
+
+/**
+ * Routes
+ */
+setRoutes(app)
+/**
+ * Error Handling 
+ */
+app.use((req,res,next)=>{
+
+    let error = new Error('404! Page Not Found')
+    error.status = 404
+    next(error)
+
+
+})
+
+app.use((error,req,res,next)=>{
+    if(error.status==404){
+       return res.render('pages/error/404')
+    }
+    else{
+        console.log(error)
+        return res.render('pages/error/500')
+    }
+})
+
+
 
 const PORT = process.env.PORT || 3030
-
+/**
+ *Database Connection
+ */
 mongoose.connect(MONGODB_URI,{useNewUrlParser:true
 })
 .then(()=>{
