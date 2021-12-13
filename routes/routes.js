@@ -1,15 +1,22 @@
-
+const postRoute = require('../routes/postRoute')
 /**
- * route handling
+ * routes handling
  */
 const route =[
+
+
+    {
+        path:'/posts',
+        controller:postRoute     // posts route
+
+    },
 
 
     {
         path:'/',
         controller:(req,res)=>{
 
-            res.redirect('/explore')  // route path
+            res.redirect('/explore')  // root path
            
         }
     }
