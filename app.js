@@ -6,7 +6,6 @@ const setMiddleWare = require('./middleware/middlewares')
 const config = require('config')
 const app = express()
 
-
 const MONGODB_URI=`mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/CSE327`
 
 app.set('view engine','ejs')
@@ -38,14 +37,13 @@ setMiddleWare(app)
 
 app.use((error,req,res,next)=>{
     if(error.status==404){
-       return res.render('pages/error/404')
+       return res.render('pages/error/404',{flashMessage:{},path:{}})
     }
     else{
         console.log(error)
-        return res.render('pages/error/500')
+        return res.render('pages/error/500',{flashMessage:{},path:{}})
     }
 })
-
 
 
 const PORT = process.env.PORT || 3030
