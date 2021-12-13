@@ -1,15 +1,15 @@
 const post = require('express').Router()
 
 const {
-    CreatePostGet
+    createPostGet
 } = require('../controllers/postController')
 
 const upload = require('../middleware/UploadMiddleware')
 
 /**
- * API set for Post Controller
+ * All routes for API POST.
  */
-post.get('/createPost',CreatePostGet)
+post.get('/createPost',createPostGet)
 
 
 module.exports=post
