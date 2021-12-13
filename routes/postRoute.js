@@ -7,7 +7,7 @@ const {
 const upload = require('../middleware/UploadMiddleware')
 
 /**
- * All routes for API POST
+ * All routes for API POST.
  */
 post.get('/createPost',createPostGet)
 
