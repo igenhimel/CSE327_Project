@@ -16,7 +16,6 @@ const store = new MongoDBStore({
   /**
    * All Middleware 
    */
-
 const middleware = [
     morgan('dev'),
     express.static('public'),
@@ -40,7 +39,6 @@ module.exports = app =>{
         app.use(m)
     })
 
+
 }
-
-
 
