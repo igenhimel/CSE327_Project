@@ -14,9 +14,9 @@ exports.signUpGetController =  (req,res,next)=>{
       
       title:'Sign Up To Diary of Dreams',
       path:'signpath',
-      error:{},
-      value:{},
-      flashMessage:Flash.getMessage(req)
+      error: {},
+      value: {},
+      flashMessage: Flash.getMessage(req)
     
     })
 
