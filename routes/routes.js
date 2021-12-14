@@ -1,5 +1,5 @@
 const authRoutes = require('../routes/authRoute')
-const postRoute = require('../routes/postRoute')
+
 
 const route = [
 
@@ -7,11 +7,7 @@ const route = [
         path:'/auth',
         controller:authRoutes
     },
-    {
-        path:'/posts',
-        controller:postRoute     // posts route
-
-    },
+  
     {
         path:'/',
         controller:(req,res)=>{
