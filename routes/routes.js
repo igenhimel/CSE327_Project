@@ -1,9 +1,14 @@
-
+const authRoutes = require('../routes/authRoute')
 
 /**
  * Route Handing
  */
  const route = [
+
+    {
+        path:'/auth',
+        controller:authRoutes
+    },
 
     {
         path:'/',
