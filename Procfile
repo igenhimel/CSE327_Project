@@ -1,1 +1,0 @@
-web:supervisor --exec babel-node app
