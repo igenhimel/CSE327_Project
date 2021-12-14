@@ -22,11 +22,10 @@ setMiddleWare(app)
 
  setRoutes(app)
 
- /**
-  * Error handling
-  */
-
- app.use((req,res,next)=>{
+/**
+ * Error Handling 
+ */
+app.use((req,res,next)=>{
 
     let error = new Error('404! Page Not Found')
     error.status = 404
@@ -34,6 +33,7 @@ setMiddleWare(app)
 
 
 })
+
 
 app.use((error,req,res,next)=>{
     if(error.status==404){
@@ -46,12 +46,11 @@ app.use((error,req,res,next)=>{
 })
 
 
+
 const PORT = process.env.PORT || 3030
-
 /**
- * database connection
+ *Database Connection
  */
-
 mongoose.connect(MONGODB_URI,{useNewUrlParser:true
 })
 .then(()=>{
