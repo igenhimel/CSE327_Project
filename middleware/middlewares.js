@@ -12,6 +12,7 @@ const passport = require('passport')
 
 require('../config/passport')(passport)
 
+
 const MONGODB_URI=`mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/diary`
 
 const store = new MongoDBStore({
@@ -33,12 +34,12 @@ const middleware = [
             maxAge: 1000* 60 * 60 *24 * 365
         }
     }),
+
     flash(),
     bindUserWithRequest(),
     setLocals(),
     passport.initialize(),
     passport.session()
-    
 
 ]
 
