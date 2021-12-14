@@ -5,7 +5,7 @@ const {Schema,model} =require('mongoose')
  */
 const PostSchema =new Schema({
 
-    title:{
+    title:{ 
         type:String,
         trim:true,
         required:true,
