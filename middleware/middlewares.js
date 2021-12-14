@@ -3,8 +3,17 @@ const express = require('express')
 const morgan = require('morgan')
 const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session);
-const config = require('config')
 const flash = require('connect-flash')
+const config = require('config')
+
+
+const MONGODB_URI=`mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/diary`
+
+const store = new MongoDBStore({
+    uri: MONGODB_URI,
+    collection: 'sessions',
+  });
+
 
 const MONGODB_URI=`mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/CSE327`
 
@@ -16,6 +25,7 @@ const store = new MongoDBStore({
   /**
    * All Middleware 
    */
+
 const middleware = [
     morgan('dev'),
     express.static('public'),
@@ -30,6 +40,7 @@ const middleware = [
             maxAge: 1000* 60 * 60 *24 * 365
         }
     }),
+
     flash()
 
 ]
