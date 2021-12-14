@@ -7,7 +7,7 @@ const Flash = require('../utils/Flash')
  * @param {object} res response object of the signUpGetController method of authController
  * @param {object} next handling error of the signUpGetController method of authController
  */
-exports.signUpGetController = (req,res,next)=>{
+exports.signUpGetController =  (req,res,next)=>{
  
  
     res.render('pages/auth/signup',{
