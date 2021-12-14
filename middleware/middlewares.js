@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session);
 const config = require('config')
+const flash = require('connect-flash')
 
 const MONGODB_URI=`mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/CSE327`
 
@@ -28,8 +29,8 @@ const middleware = [
         cookie : {
             maxAge: 1000* 60 * 60 *24 * 365
         }
-    })
-   
+    }),
+    flash(),
     
 
 ]
