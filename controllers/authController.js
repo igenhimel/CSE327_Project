@@ -5,7 +5,7 @@ const Flash = require('../utils/Flash')
  * api method for viewing the signup page-
  * @param {object} req request object of the signUpGetController method of authController
  * @param {object} res response object of the signUpGetController method of authController
- * @param {object} next handling error of the signUpGetController method of authController
+ * @param {object} next handling error of the signUpGetController method of AuthController
  */
 exports.signUpGetController =  (req,res,next)=>{
  
