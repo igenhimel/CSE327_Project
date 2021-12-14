@@ -1,18 +1,132 @@
 <%- include('../../../partials/header.ejs') %>
 
-<!-- Create Post -->
-  
-    <div class="container text-center">
+<!-- Create Post Initial Page  -->
 
-      <h1 class="text-dark display-4 mt-4"><%= head %> </h1>
-       
-         <div class="d-flex flex-row justify-content-center mt-3">    
+<div class="container text-center">
+
+  <h1 class="text-dark display-4 mt-4"><%= head %> </h1>
+
+  <div class="d-flex flex-row justify-content-center mt-3">
+
+    <img src="#" alt="profilePic" class=" img-thumbnail img-fluid rounded-circle mr-3" width="100px" id="propicPost">
+
+    <input type="text" name="" class="form-control mt-5 w-50 py-4"
+      placeholder="<%= error.title||error.body||error.tags?value.text:'Write Something...' %> " id="openPost">
+
+  </div>
+</div>
+
+<!--Creat post intial page end  -->
+
+<!-- Create post modal body start -->
+
+<div class="modal fade" id="postModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <h2 class="text-light lead">Create New Post</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-crop">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <!-- Post Tile Here -->
+
+      <div class="modal-body bg-light" id="modalbody">
+        <form action="#" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" class="form-control" placeholder="Your Post Title" value="">
+            <div class="invalid-feedback">
+
+            </div>
+          </div>
       
-        <img src="#" alt="profilePic" class=" img-thumbnail img-fluid rounded-circle mr-3" width="100px" id="propicPost">
-          
-        <input type="text" name=""  class="form-control mt-5 w-50 py-4" placeholder="<%= error.title||error.body||error.tags?value.text:'Write Something...' %> " id="openPost">
-        
-         </div>
-       </div> 
+        <!-- Post title end -->
 
-<%- include('../../../partials/footer.ejs') %>      
+        <!-- Post body start -->
+
+          <div class="form-group">
+            <label for="body">Body</label>
+            <textarea name="body" id="tiny-mce-body" cols="30" rows="10" class="form-control "
+              placeholder="Write Something"></textarea>
+            <div class="invalid-feedback">
+
+            </div>
+          </div>
+
+          <!-- Post body end -->
+
+          <!-- Post Tags start -->
+
+          <div class="form-group">
+            <label for="tags">Tags</label>
+            <input type="text" name="tags" id="tags" class="form-control " placeholder="tag1,tag2,tag3" value="">
+
+            <div class="invalid-feedback">
+
+
+
+            </div>
+
+          </div>
+
+          <!-- Post tags ends -->
+
+
+          <!-- Post thumbnail -->
+
+          <div class="input-group">
+            <div class=" input-group-prepend">
+              <span class=" input-group-text">Upload</span>
+            </div>
+
+            <div class=" custom-file">
+              <input type="file" name="thumbnail" id="inputGroupFile" class="custom-file-input">
+              <label for="inputGroupFile" class=" custom-file-label">Choose File</label>
+
+            </div>
+
+
+          <!-- Post thumbnail end -->
+
+
+          </div>
+          <input type="submit" value="Post Here" class="btn btn-dark mt-3" id="frmSendMessage">
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<%- include('../../../partials/footer.ejs') %>
+
+
+<script src="https://cdn.tiny.cloud/1/3b7wpyh8xo782nz8abkwcxm1rpbs4fwszc0ouf1tyqvi1ijv/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
+<script src="/scripts/tinymce.js"></script>
+
+<!-- Modal controller -->
+
+<script>
+  $('#openPost').on('click', function () {
+    $('#postModal').modal('show')
+  })
+
+  $('#inputGroupFile').on('change', function (e) {
+    let filename = e.target.files[0].name
+    $(this).next('.custom-file-label').html(filename)
+
+  })
+</script>
+
+
+</body>
+
+</html>
