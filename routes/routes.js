@@ -11,7 +11,7 @@ const route =[
 
     },
 
-
+ 
     {
         path:'/',
         controller:(req,res)=>{
