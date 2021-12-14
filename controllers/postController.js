@@ -2,7 +2,7 @@ const Flash = require('../utils/Flash')
 const Post = require('../models/Post')
 const Profile = require('../models/Profile')
 
-
+ 
 /**
  * API Method for viewing the post creation page
  * @param {object} req - request object of the createPostGet method of postController
