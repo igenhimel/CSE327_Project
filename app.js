@@ -8,7 +8,7 @@ const app = express()
 
 const MONGODB_URI=`mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/CSE327`
 
-app.set('view engine','ejs')
+app.set('view engine','ejs') 
 app.set('views', 'views')
 
 /**
