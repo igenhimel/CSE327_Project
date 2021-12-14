@@ -10,7 +10,7 @@ const Flash = require('../utils/Flash')
 exports.signUpGetController =  (req,res,next)=>{
  
  
-    res.render('pages/auth/signup',{
+    res.render('pages/auth/signup', {
       
       title:'Sign Up To Diary of Dreams',
       path:'signpath',
