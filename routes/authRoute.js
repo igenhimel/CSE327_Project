@@ -1,5 +1,5 @@
 
-const authRoute = require('express').Router()
+const authRoute =  require('express').Router()
 const {
 
     signUpGetController
