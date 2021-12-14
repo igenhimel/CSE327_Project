@@ -16,6 +16,7 @@ const store = new MongoDBStore({
   /**
    * All Middleware 
    */
+
 const middleware = [
     morgan('dev'),
     express.static('public'),
@@ -30,8 +31,7 @@ const middleware = [
             maxAge: 1000* 60 * 60 *24 * 365
         }
     }),
-    flash(),
-    
+    flash()
 
 ]
 
@@ -39,4 +39,8 @@ module.exports = app =>{
     middleware.forEach(m=>{
         app.use(m)
     })
+
 }
+
+
+

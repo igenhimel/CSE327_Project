@@ -6,24 +6,22 @@ const setMiddleWare = require('./middleware/middlewares')
 const config = require('config')
 const app = express()
 
-
 const MONGODB_URI=`mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/CSE327`
 
 app.set('view engine','ejs')
 app.set('views', 'views')
 
-
-
 /**
- * Middleware
+ * Middleware 
  */
-
 setMiddleWare(app)
 
 /**
  * Routes
  */
-setRoutes(app)
+
+ setRoutes(app)
+
 /**
  * Error Handling 
  */
@@ -35,6 +33,7 @@ app.use((req,res,next)=>{
 
 
 })
+
 
 app.use((error,req,res,next)=>{
     if(error.status==404){

@@ -1,23 +1,27 @@
 const authRoutes = require('../routes/authRoute')
+const postRoute = require('../routes/postRoute')
 
-/**
- * Route Handing
- */
- const route = [
+const route = [
 
     {
         path:'/auth',
         controller:authRoutes
     },
+    {
+        path:'/posts',
+        controller:postRoute     // posts route
 
+    },
     {
         path:'/',
         controller:(req,res)=>{
 
-            res.redirect('/explore')
+            res.redirect('/explore')  // root path
+
            
         }
     }
+
 
 
 ]
@@ -32,3 +36,4 @@ module.exports = (app)=>{
        }
     })
 }
+
