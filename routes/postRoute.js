@@ -11,5 +11,5 @@ const upload = require('../middleware/UploadMiddleware')
  */
 post.get('/createPost',createPostGet)
 
-
+ 
 module.exports=post
