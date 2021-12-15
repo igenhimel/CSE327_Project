@@ -1,42 +1,43 @@
-
 const authRoutes = require('../routes/authRoute')
 const postRoute = require('../routes/postRoute')
+const dashboardRoutes = require('../routes/dashboardRoute')
+    /**
+     * routes handling
+     */
+const route = [
 
-/**
- * routes handling
- */
-const route =[
 
-    
     {
-        path:'/auth',
-        controller:authRoutes
+        path: '/auth',
+        controller: authRoutes
     },
 
     {
-        path:'/posts',
-        controller:postRoute     // posts route
- 
+        path: '/posts',
+        controller: postRoute // posts route
+
     },
 
     {
-        path:'/',
-        controller:(req,res)=>{
+        path: '/dashboard',
+        controller: dashboardRoutes
 
-            res.redirect('/explore')  // root path    
+    },
+
+    {
+        path: '/',
+        controller: (req, res) => {
+            res.redirect('/explore') // root path    
         }
     }
 ]
 
-module.exports = (app)=>{
-    route.forEach((r)=>{
-       if(r.path=='/'){
-           app.get(r.path,r.controller)
-       }
-       else{
-        app.use(r.path,r.controller)
-       }
+module.exports = (app) => {
+    route.forEach((r) => {
+        if (r.path == '/') {
+            app.get(r.path, r.controller)
+        } else {
+            app.use(r.path, r.controller)
+        }
     })
-
 }
-
