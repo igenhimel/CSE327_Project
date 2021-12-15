@@ -1,9 +1,17 @@
+
+const authRoutes = require('../routes/authRoute')
 const postRoute = require('../routes/postRoute')
+
 /**
  * routes handling
  */
 const route =[
 
+    
+    {
+        path:'/auth',
+        controller:authRoutes
+    },
 
     {
         path:'/posts',
@@ -11,18 +19,14 @@ const route =[
  
     },
 
- 
     {
         path:'/',
         controller:(req,res)=>{
 
-            res.redirect('/explore')  // root path
-           
+            res.redirect('/explore')  // root path    
         }
     }
-
 ]
-
 
 module.exports = (app)=>{
     route.forEach((r)=>{
@@ -33,4 +37,6 @@ module.exports = (app)=>{
         app.use(r.path,r.controller)
        }
     })
+
 }
+
