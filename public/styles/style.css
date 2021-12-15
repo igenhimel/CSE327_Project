@@ -19,3 +19,14 @@ body {
 
 .bg {
   background-color: #0C1023; }
+
+#signup {
+  min-height: 600px;
+  position: relative; }
+  #signup .signup-title {
+    min-height: 600px; }
+  #signup .signup-form {
+    min-height: 600px; }
+  #signup .card {
+    width: 70%; }
+

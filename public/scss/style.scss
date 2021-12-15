@@ -17,7 +17,6 @@
        border-top-left-radius: 0px; 
        border-bottom-left-radius: 0px;  
    }
-   
 
    body{
     font-family: 'Oxygen', sans-serif;
@@ -27,4 +26,20 @@
 
 .bg{
 background-color: #0C1023;
+
 }
+
+#signup{
+    min-height: 600px;
+    position: relative;
+    .signup-title{
+        min-height: 600px;
+    }
+    .signup-form{
+        min-height: 600px;
+    }
+    .card{
+        width: 70%;
+    }
+}
+
