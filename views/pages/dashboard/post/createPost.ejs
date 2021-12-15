@@ -8,7 +8,8 @@
 
   <div class="d-flex flex-row justify-content-center mt-3">
 
-    <img src="#" alt="profilePic" class=" img-thumbnail img-fluid rounded-circle mr-3" width="100px" id="propicPost">
+    <img src="/uploads/default.jpg" alt="profilePic" class=" img-thumbnail img-fluid rounded-circle mr-3" width="100px"
+      id="propicPost">
 
     <input type="text" name="" class="form-control mt-5 w-50 py-4"
       placeholder="<%= error.title||error.body||error.tags?value.text:'Write Something...' %> " id="openPost">
@@ -31,27 +32,34 @@
       </div>
 
 
-      <!-- Post Tile Here -->
+      <!-- Post Title Here -->
 
       <div class="modal-body bg-light" id="modalbody">
         <form action="#" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" class="form-control" placeholder="Your Post Title" value="">
+            <input type="text" name="title" id="title" class="form-control <%= error.title?'is-invalid':'' %> "
+              placeholder="Your Post Title" value="<%=value.title?value.title:''%>">
             <div class="invalid-feedback">
+
+              <%= error.title %>
 
             </div>
           </div>
-      
-        <!-- Post title end -->
 
-        <!-- Post body start -->
+
+          <!-- Post title end -->
+
+          <!-- Post body start -->
 
           <div class="form-group">
             <label for="body">Body</label>
-            <textarea name="body" id="tiny-mce-body" cols="30" rows="10" class="form-control "
-              placeholder="Write Something"></textarea>
+            <textarea name="body" id="tiny-mce-body" cols="30" rows="10"
+              class="form-control <%= error.body?'is-invalid':'' %> "
+              placeholder="Write Something"><%=value.body?value.body:''%></textarea>
             <div class="invalid-feedback">
+
+              <%= error.body%>
 
             </div>
           </div>
@@ -62,11 +70,12 @@
 
           <div class="form-group">
             <label for="tags">Tags</label>
-            <input type="text" name="tags" id="tags" class="form-control " placeholder="tag1,tag2,tag3" value="">
+            <input type="text" name="tags" id="tags" class="form-control <%= error.tags?'is-invalid':'' %>"
+              placeholder="tag1,tag2,tag3" value="<%=value.tags?value.tags:''%>">
 
             <div class="invalid-feedback">
 
-
+              <%= error.tags%>
 
             </div>
 
@@ -89,19 +98,22 @@
             </div>
 
 
-          <!-- Post thumbnail end -->
+
 
 
           </div>
-          <input type="submit" value="Post Here" class="btn btn-dark mt-3" id="frmSendMessage">
 
-        </form>
+          <!-- Post thumbnail end -->
 
-      </div>
+      <input type="submit" value="Post Here" class="btn btn-dark mt-3" id="frmSendMessage">
+
+      </form>
 
     </div>
 
   </div>
+
+</div>
 
 </div>
 
