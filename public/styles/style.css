@@ -1,0 +1,31 @@
+.navbar .search-bar {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px; }
+
+.navbar {
+  border-bottom: 2px solid lightblue; }
+
+.navbar .search-bar:focus {
+  outline: 0;
+  box-shadow: none !important; }
+
+.navbar .search-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px; }
+
+body {
+  font-family: 'Oxygen', sans-serif;
+  background-color: lightcyan; }
+
+.bg {
+  background-color: #0C1023; }
+
+#signup {
+  min-height: 600px;
+  position: relative; }
+  #signup .signup-title {
+    min-height: 600px; }
+  #signup .signup-form {
+    min-height: 600px; }
+  #signup .card {
+    width: 70%; }
