@@ -39,5 +39,6 @@ module.exports = (app) => {
         } else {
             app.use(r.path, r.controller)
         }
+
     })
 }
