@@ -7,19 +7,15 @@ const {setLocals} = require('../middleware/setLocals')
 const flash = require('connect-flash')
 const config = require('config')
 const passport = require('passport')
+
 require('../config/passport')(passport)
 
 const MONGODB_URI=`mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/diary`
-
 
 const store = new MongoDBStore({
     uri: MONGODB_URI,
     collection: 'sessions',
   });
-
-  /**
-   * All Middleware 
-   */
 
 
 const middleware = [
@@ -41,19 +37,11 @@ const middleware = [
     setLocals(),
     passport.initialize(),
     passport.session()
-
-    
-
-
 ]
 
 module.exports = app =>{
     middleware.forEach(m=>{
         app.use(m)
     })
-
 }
-
-
-
 
