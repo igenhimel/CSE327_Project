@@ -26,9 +26,9 @@ exports.createPostGet = (req, res, next) => {
 
 /**
  * API Method for creating new post
- * @param {*} req - request object of the createPost method of PostController 
- * @param {*} res - response object of the createPost method of postController
- * @param {*} next -next object of the createPost method of postController
+ * @param {object} req - request object of the createPost method of PostController 
+ * @param {object} res - response object of the createPost method of postController
+ * @param {object} next -next object of the createPost method of postController
  * @returns response status code
  */
 
