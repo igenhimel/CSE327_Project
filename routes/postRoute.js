@@ -12,8 +12,6 @@ const {
  * All routes for API POST.
  */
 
-
-
 post.get('/createPost',createPostGet)
 post.post('/createPost',upload.single('thumbnail'),postValidator,createPost)
  
