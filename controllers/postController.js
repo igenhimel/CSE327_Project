@@ -1,7 +1,9 @@
 const Flash = require('../utils/Flash')
-const {validationResult} = require('express-validator')
+const {
+    validationResult
+} = require('express-validator')
 const formatter = require('../utils/validationFormatter')
-const cheerio =require('cheerio')
+const cheerio = require('cheerio')
 const Post = require('../models/Post')
 const Profile = require('../models/Profile')
 const readingTime = require('reading-time')
@@ -29,7 +31,7 @@ exports.createPostGet = (req, res, next) => {
  * @param {object} req - request object of the createPost method of PostController 
  * @param {object} res - response object of the createPost method of postController
  * @param {object} next -next object of the createPost method of postController
- * @returns response status code
+ * @returns status code 400 and render create post page
  */
 
 exports.createPost = async (req, res, next) => {
@@ -37,18 +39,22 @@ exports.createPost = async (req, res, next) => {
     //error stored into this error variable
     let error = validationResult(req).formatWith(formatter)
 
+    //console all types of error
     console.log(error.mapped())
+
     let {
         body,
         title,
         tags
-    } = req.body
+    } = req.body // destructure all value from request body
+
+
     let node = cheerio.load(body) // post body stored
     let text = node.text() // html to text convert
 
     //check whether validation failed or not
     if (!error.isEmpty()) {
-        req.flash('fail', 'Something Error! Your Post has been Drafted')
+        req.flash('fail', 'Something Error! Your Post has been Drafted') //falsh message
         return res.status(400).render('pages/dashboard/post/createPost', {
             title: 'Create New Post',
             head: 'Write Anything You Want',
@@ -62,8 +68,9 @@ exports.createPost = async (req, res, next) => {
                 body
             }
         })
-    }
-    
+    } // return
+
+    //if tags available then split it.
     if (tags) {
         tags = tags.split(',')
         tags.map(t => t.trim())
@@ -77,6 +84,8 @@ exports.createPost = async (req, res, next) => {
     let profile = await Profile.findOne({
         user: req.user._id
     })
+
+    //save new post into mongoDB server
     let post = new Post({
 
         title,
@@ -93,6 +102,7 @@ exports.createPost = async (req, res, next) => {
 
     })
 
+    //if request file available
     if (req.file) {
         post.thumbnail = `/uploads/${req.file.filename}`
     }
@@ -122,8 +132,195 @@ exports.createPost = async (req, res, next) => {
         next(e)
     }
 
+}
 
 
+
+/**
+ * API Method for getting edit post page
+ * @param {object} req - request object of the createPostGetMethod method of PostController 
+ * @param {object} res - response object of the createPostGetMethod method of postController
+ * @param {object} next -next object of the createPostGetMethod method of postController
+ */
+exports.editPostGetMethod = async (req, res, next) => {
+
+    let postId = req.params.postId // catch postId from users request
+
+
+    try {
+
+        //findout post is available or not
+        let post = await Post.findOne({
+                author: req.user._id,
+                _id: postId
+            }
+
+        )
+
+         //if post is not available then it show page not found
+        if (!post) {
+            let error = new Error('404 Page Not Found')
+            error.status = 404
+            throw error
+        }
+
+        //if post found render into edit post [age]
+        res.render('pages/dashboard/post/editPost', {
+            title: 'Edit Post',
+            head: 'Edit Your Post',
+            path: {},
+            flashMessage: Flash.getMessage(req),
+            post,
+            value: {},
+            error: {}
+
+        })
+    } catch (e) {
+        next(e)
+    }
+
+
+
+
+}
+
+
+/**
+ * API Method for updating post
+ * @param {object} req - request object of the createPostPostMethod method of PostController 
+ * @param {object} res - response object of the createPostPostMethod method of postController
+ * @param {object} next -next object of the createPostPostMethod method of postController
+ */
+exports.editPostPostMethod = async (req, res, next) => {
+
+    let postId = req.params.postId // catch postId from users request
+
+    let {
+        title,
+        body,
+        tags
+    } = req.body  // destructure value from request body
+
+    //seraching into database post is available or not
+    let post = await Post.findOne({
+            author: req.user._id,
+            _id: postId
+        }
+
+    )
+
+
+    let error = validationResult(req).formatWith(formatter)
+
+    /**
+     * validation checker and return if error found
+     */
+    if (!error.isEmpty()) {
+        return res.render('pages/dashboard/post/editPost', {
+            title: 'Edit Post',
+            head: 'Edit Your Post',
+            flashMessage: Flash.getMessage(req),
+            path: {},
+            error: error.mapped(),
+            post
+        })
+    }
+
+    //if tags founds split it
+    if (tags) {
+        tags = tags.split(',')
+        tags.map(t => t.trim())
+    }
+
+    let thumbnail = post.thumbnail
+
+    if (req.file) {
+        thumbnail = `/uploads/${req.file.filename}`
+    }
+
+    let readTime = readingTime(body).text
+    try {
+
+        //update post and store into database
+        await Post.findOneAndUpdate({
+            author: req.user._id,
+            _id: postId
+        }, {
+            $set: {
+                title,
+                body,
+                tags,
+                thumbnail,
+                readTime
+            }
+        }, {
+            new: true
+        })
+
+        req.flash('success', 'Post has been Updated')
+        res.redirect('/dashboard/myProfile')
+
+    } catch (e) {
+        next(e)
+    }
+
+
+
+}
+
+
+/**
+ * API Method for delete post
+ * @param {object} req - request object of the deletePostController method of PostController 
+ * @param {object} res - response object of the deletePostController method of postController
+ * @param {object} next -next object of the deletePostController method of postController
+ */
+exports.deletePostController = async (req, res, next) => {
+
+    let {
+        postId
+    } = req.params //destructure postId from request parameter
+
+    try {
+
+        // check post is available or not into database
+        let post = Post.findOne({
+            author: req.user._id,
+            _id: postId
+        })
+
+        //if post not found throewing an error
+        if (!post) {
+            let error = new Error('404 Page Not Found')
+            error.status = 404
+            throw error
+        }
+
+        //if found delete it from database
+        await Post.findOneAndDelete({
+            _id: postId
+        })
+
+        //after delete update it into database
+        await Profile.findOneAndUpdate({
+            user: req.user._id
+        }, {
+            $pull: {
+                'posts': postId
+            }
+        }, {
+            new: true
+        })
+
+        //showing flash messgae
+        req.flash('success', 'Post Deleted Successfully')
+        res.redirect('/dashboard/myProfile') //render into profile Page
+
+
+
+    } catch (e) {
+      // if error happened catch it
+    }
 
 
 
