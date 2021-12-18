@@ -1,6 +1,8 @@
 const authRoutes = require('../routes/authRoute')
 const postRoute = require('../routes/postRoute')
 const dashboardRoutes = require('../routes/dashboardRoute')
+const searchRoute = require('./searchRoute')
+
     /**
      * routes handling
      */
@@ -23,6 +25,12 @@ const route = [
         controller: dashboardRoutes
 
     },
+    
+    {
+        path:'/search',
+        controller:searchRoute     // search route
+ 
+    },
 
     {
         path: '/',
@@ -39,6 +47,5 @@ module.exports = (app) => {
         } else {
             app.use(r.path, r.controller)
         }
-
     })
 }
