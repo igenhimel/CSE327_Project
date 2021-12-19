@@ -46,10 +46,10 @@ exports.signUpPostController = async (req, res, next) => {
     username,
     email,
     password,
-    cpassword
+    
   } = req.body
 
-  let errors = validationResult(req).formatWith(errorFormatter)
+  let errors = validationResult(req).formatWith(errorFormatter)  // store error message 
   console.log(errors.mapped())
   if (!errors.isEmpty()) {
     req.flash('fail', 'Please Check Your Form')
@@ -72,15 +72,15 @@ exports.signUpPostController = async (req, res, next) => {
 
   try {
 
-    let hashPassword = await bcrypt.hash(password, 11)
-
+    let hashPassword = await bcrypt.hash(password, 11) // encrypted password 
+//user data save into mongodb database
     let user = new User({
       username,
       email,
       password: hashPassword
     })
 
-    await user.save()
+    await user.save()  
     req.flash('success', 'Please Login To Your Account')
     res.redirect('/auth/login')
 
@@ -126,14 +126,14 @@ exports.loginPostController = async (req, res, next) => {
   let {
     email,
     password
-  } = req.body
+  } = req.body  // data destructure from request body
   let errors = validationResult(req).formatWith(errorFormatter)
-  let user = await User.findOne({
+  let user = await User.findOne({ 
     email
-  })
+  }) // check email id available or not 
 
   try {
-
+// validation check 
     if (!errors.isEmpty()) {
       req.flash('fail', 'Authentication Failed!')
       return res.render('pages/auth/login', {
@@ -146,7 +146,7 @@ exports.loginPostController = async (req, res, next) => {
 
     }
 
-    let match = await bcrypt.compare(password, user.password)
+    let match = await bcrypt.compare(password, user.password) //compare password 
 
     if (!match) {
       req.flash('fail', 'Authentication Failed!')
@@ -163,7 +163,7 @@ exports.loginPostController = async (req, res, next) => {
 
     }
 
-
+// login session store into database 
     req.session.isLoggedIn = true,
       req.session.user = user,
       req.session.save(err => {
@@ -195,7 +195,7 @@ exports.googlePostController = async (req, res, next) => {
 
   try {
 
-
+//login session store into database
     req.session.isLoggedIn = true,
       req.session.user = req.user._id,
       req.session.save(err => {
@@ -224,7 +224,7 @@ exports.googlePostController = async (req, res, next) => {
  */
 
 exports.logoutController = (req, res, next) => {
-
+//login session destroy 
   req.session.destroy(err => {
 
     if (err) {
