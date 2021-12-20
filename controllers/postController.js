@@ -7,7 +7,6 @@ const cheerio = require('cheerio')
 const Post = require('../models/Post')
 const Profile = require('../models/Profile')
 const readingTime = require('reading-time')
-const mongoose = require('mongoose')
 
 
 /**
@@ -79,109 +78,55 @@ exports.createPost = async (req, res, next) => {
 
     let readTime = readingTime(body).text //generating reading time
 
-    const dummyId = mongoose.Types.ObjectId();
-    const dummyIdProfile = mongoose.Types.ObjectId();
-
     /**
      * check user has profile or not
-     * if request user available
      */
+    let profile = await Profile.findOne({
+        user: req.user._id
+    })
 
-    if (req.user) {
+    //save new post into mongoDB server
+    let post = new Post({
 
-        var profile = await Profile.findOne({
-            user: req.user._id
-        })
-
-        //save new post into mongoDB server
-        var post = new Post({
-
-            title,
-            body,
-            tags,
-            author: req.user._id,
-            profile: profile._id,
-            thumbnail: '',
-            readTime,
-            likes: [],
-            dislikes: [],
-            comments: []
+        title,
+        body,
+        tags,
+        author: req.user._id,
+        profile: profile._id,
+        thumbnail: '',
+        readTime,
+        likes: [],
+        dislikes: [],
+        comments: []
 
 
-        })
+    })
 
-        //if request file available
-        if (req.file) {
-            post.thumbnail = `/uploads/${req.file.filename}`
-        }
-
+    //if request file available
+    if (req.file) {
+        post.thumbnail = `/uploads/${req.file.filename}`
     }
+
 
     /**
      * create new post and stored into mongodb database
      */
     try {
 
-        if (req.user) {
-            let createNewPost = await post.save()
+        let createNewPost = await post.save()
 
-            /**
-             * Find user and upadte post into their profile
-             */
-            await Profile.findOneAndUpdate({
-                user: req.user._id
-            }, {
-                $push: {
-                    'posts': createNewPost._id
-                }
-            })
-            req.flash('success', 'Your Post have been Successfully Posted')
-            res.redirect(`/dashboard/myProfile`)
-        } 
-        
-        else {
-
-            /**
-             * if request user not available then used dummy data
-             */
-            let post = new Post({
-
-                title,
-                body,
-                tags,
-                author: dummyId,
-                profile: dummyIdProfile,
-                thumbnail: '',
-                readTime,
-                likes: [],
-                dislikes: [],
-                comments: []
-
-
-            })
-
-            //if request file available
-            if (req.file) {
-                post.thumbnail = `/uploads/${req.file.filename}`
+        /**
+         * Find user and upadte post into their profile
+         */
+        await Profile.findOneAndUpdate({
+            user: req.user._id
+        }, {
+            $push: {
+                'posts': createNewPost._id
             }
-
-            let createNewPost = await post.save()
-
-            /**
-             * Find user and upadte post into their profile
-             */
-
-            await Profile.findOneAndUpdate({
-                $push: {
-                    'posts': createNewPost._id
-                }
-            })
-            req.flash('success', 'Your Post have been Successfully Posted')
-            res.redirect(`/posts/createPost`)
-
-        }
-
-
+        })
+        req.flash('success', 'Your Post have been Successfully Posted')
+        res.redirect(`/dashboard/myProfile`)
 
     } catch (e) {
         next(e)
@@ -212,7 +157,7 @@ exports.editPostGetMethod = async (req, res, next) => {
 
         )
 
-        //if post is not available then it show page not found
+         //if post is not available then it show page not found
         if (!post) {
             let error = new Error('404 Page Not Found')
             error.status = 404
@@ -254,7 +199,7 @@ exports.editPostPostMethod = async (req, res, next) => {
         title,
         body,
         tags
-    } = req.body // destructure value from request body
+    } = req.body  // destructure value from request body
 
     //seraching into database post is available or not
     let post = await Post.findOne({
@@ -374,7 +319,7 @@ exports.deletePostController = async (req, res, next) => {
 
 
     } catch (e) {
-        // if error happened catch it
+      // if error happened catch it
     }
 
 
