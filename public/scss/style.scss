@@ -1,3 +1,20 @@
 #searchContainer{
-    background-color: aqua;
+    position: relative;
+    width: 1180px;
+    height: 540px;
+    margin: 50px auto;
+    left: 8%;
+    .searchBox{
+        position: relative;
+        width: 400px;
+        height: 400px;
+        background: #fff;
+        float: left;
+        margin: 50px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        font-size: 20px;
+        padding: 6px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    }
 }
