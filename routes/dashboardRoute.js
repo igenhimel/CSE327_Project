@@ -9,8 +9,7 @@ const {
 /**
  * all dashboard api route
  */
-dashRouter.get('/createProfile', isAuthenticated, CreateProfileGet)
-dashRouter.post('/CreateProfile', profileValidator, isAuthenticated, CreateProfilePost)
+dashRouter.get('/createProfile', createProfileGet)
 
 
 module.exports = dashRouter
