@@ -1,4 +1,3 @@
-const Flash = require('../utils/Flash')
 const Profile = require('../models/Profile')
 
 /**
@@ -10,19 +9,17 @@ const Profile = require('../models/Profile')
  */
 exports.createProfileGet = async(req, res, next) => {
 
-    let profile = await Profile.findOne({ user: req.user._id })
 
     try {
-
-        if (profile) {
-            return res.redirect('/dashboard/myProfile')
-        }
         res.render('pages/dashboard/CreateProfile', {
             title: 'Create Your Account Profile',
             path: {},
-            flashMessage: Flash.getMessage(req),
             error: {},
-            value: {}
+            value: {},
+            person: {
+                name: "Israk",
+                email: "israkrafi54@gmail.com"
+            }
         })
 
     } catch (e) {
