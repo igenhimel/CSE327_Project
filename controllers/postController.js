@@ -141,6 +141,17 @@ exports.createPost = async (req, res, next) => {
 
         } else {
 
+            let dummyProfile = new Profile({
+
+                user:dummyId,
+                name:'Himel',
+                title:'demo',
+                bio:'demo'
+                
+            })
+
+            let createDummyProfile = await dummyProfile.save()
+
             /**
              * if request user not available then used dummy data
              */
@@ -150,7 +161,7 @@ exports.createPost = async (req, res, next) => {
                 body,
                 tags,
                 author: dummyId,
-                profile: dummyIdProfile,
+                profile: createDummyProfile._id,
                 thumbnail: '',
                 readTime,
                 likes: [],
