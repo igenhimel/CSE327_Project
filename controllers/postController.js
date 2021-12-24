@@ -15,7 +15,6 @@ const User = require('../models/User')
 
 
 
-
 /**
  * API Method for viewing the post creation page
  * @param {object} req - request object of the createPostGet method of postController
@@ -85,43 +84,49 @@ exports.createPost = async (req, res, next) => {
 
     let readTime = readingTime(body).text //generating reading time
 
+    //dummy objectID
+    const dummyId = mongoose.Types.ObjectId();
+    const dummyIdProfile = mongoose.Types.ObjectId();
 
     /**
      * check user has profile or not
+     * if request user available
      */
-    let profile = await Profile.findOne({
-        user: req.user._id
-    })
 
-    //save new post into mongoDB server
-    let post = new Post({
+    if (req.user) {
 
-        title,
-        body,
-        tags,
-        author: req.user._id,
-        profile: profile._id,
-        thumbnail: '',
-        readTime,
-        likes: [],
-        dislikes: [],
-        comments: []
+        var profile = await Profile.findOne({
+            user: req.user._id
+        })
+
+        //save new post into mongoDB server
+        var post = new Post({
+
+            title,
+            body,
+            tags,
+            author: req.user._id,
+            profile: profile._id,
+            thumbnail: '',
+            readTime,
+            likes: [],
+            dislikes: [],
+            comments: []
 
 
-    })
+        })
 
-    //if request file available
-    if (req.file) {
-        post.thumbnail = `/uploads/${req.file.filename}`
+        //if request file available
+        if (req.file) {
+            post.thumbnail = `/uploads/${req.file.filename}`
+        }
+
     }
-
 
     /**
      * create new post and stored into mongodb database
      */
     try {
-
-        let createNewPost = await post.save()
 
         if (req.user) {
             let createNewPost = await post.save()
@@ -187,19 +192,28 @@ exports.createPost = async (req, res, next) => {
                 comments: []
 
 
+            })
 
-        /**
-         * Find user and upadte post into their profile
-         */
-        await Profile.findOneAndUpdate({
-            user: req.user._id
-        }, {
-            $push: {
-                'posts': createNewPost._id
+            //if request file available
+            if (req.file) {
+                post.thumbnail = `/uploads/${req.file.filename}`
             }
-        })
-        req.flash('success', 'Your Post have been Successfully Posted')
-        res.redirect(`/explore`)
+
+            let createNewPost = await post.save()
+
+            /**
+             * Find user and upadte post into their profile
+             */
+
+            await Profile.findOneAndUpdate({
+                $push: {
+                    'posts': createNewPost._id
+                }
+            })
+            req.flash('success', 'Your Post have been Successfully Posted')
+            res.redirect(`/explore`)
+
+        }
 
     } catch (e) {
         next(e)
@@ -220,19 +234,6 @@ exports.editPostGetMethod = async (req, res, next) => {
 
 
     try {
-        //findout post is available or not
-        let post = await Post.findOne({
-            author: req.user._id,
-            _id: postId
-        })
-
-
-        //if post is not available then it show page not found
-        if (!post) {
-            let error = new Error('404 Page Not Found')
-            error.status = 404
-            throw error
-        }
 
         if (req.user) {
             //findout post is available or not
@@ -286,18 +287,9 @@ exports.editPostGetMethod = async (req, res, next) => {
                 value: {},
                 error: {}
 
+            })
 
-        //if post found render into edit post [age]
-        res.render('pages/dashboard/post/editPost', {
-            title: 'Edit Post',
-            head: 'Edit Your Post',
-            path: {},
-            flashMessage: Flash.getMessage(req),
-            post,
-            value: {},
-            error: {}
-
-        })
+        }
 
 
     } catch (e) {
@@ -323,11 +315,18 @@ exports.editPostPostMethod = async (req, res, next) => {
         tags
     } = req.body // destructure value from request body
 
-    //seraching into database post is available or not
-    let post = await Post.findOne({
-        author: req.user._id,
-        _id: postId
-    })
+    if (req.user) {
+        //seraching into database post is available or not
+        var post = await Post.findOne({
+            author: req.user._id,
+            _id: postId
+        })
+    } else {
+        //seraching into database post is available or not
+        var post = await Post.findOne({
+            _id: postId
+        })
+    }
 
     let error = validationResult(req).formatWith(formatter)
 
@@ -354,7 +353,7 @@ exports.editPostPostMethod = async (req, res, next) => {
 
     let readTime = readingTime(body).text //reading time generator
 
-    let thumbnail = post.thumbnail
+    var thumbnail = post.thumbnail
 
     if (req.file) {
         thumbnail = `/uploads/${req.file.filename}`
@@ -362,25 +361,47 @@ exports.editPostPostMethod = async (req, res, next) => {
 
     try {
 
-        //update post and store into database 
-        await Post.findOneAndUpdate({
-            author: req.user._id,
-            _id: postId
-        }, {
-            $set: {
-                title,
-                body,
-                tags,
-                thumbnail,
-                readTime
-            }
-        }, {
-            new: true
-        })
+        if (req.user) {
 
-        req.flash('success', 'Post has been Updated')
-        res.redirect('/explore')
+            //update post and store into database if user is available
+            await Post.findOneAndUpdate({
+                author: req.user._id,
+                _id: postId
+            }, {
+                $set: {
+                    title,
+                    body,
+                    tags,
+                    thumbnail,
+                    readTime
+                }
+            }, {
+                new: true
+            })
 
+            req.flash('success', 'Post has been Updated')
+            res.redirect('/explore')
+
+        } else {
+
+            //update post and store into database using dummyId
+            await Post.findOneAndUpdate({
+                _id: postId
+            }, {
+                $set: {
+                    title,
+                    body,
+                    tags,
+                    thumbnail,
+                    readTime
+                }
+            }, {
+                new: true
+            })
+
+            req.flash('success', 'Post has been Updated')
+            res.redirect('/explore')
+        }
 
     } catch (e) {
         next(e)
@@ -406,39 +427,71 @@ exports.deletePostController = async (req, res, next) => {
         /**
          * delete post if user is available
          */
-        let post = Post.findOne({
-            author: req.user._id,
-            _id: postId
-        })
+        if (req.user) {
+            let post = Post.findOne({
+                author: req.user._id,
+                _id: postId
+            })
 
-        //if post not found throewing an error
-        if (!post) {
-            let error = new Error('404 Page Not Found')
-            error.status = 404
-            throw error
+            //if post not found throewing an error
+            if (!post) {
+                let error = new Error('404 Page Not Found')
+                error.status = 404
+                throw error
+            }
+
+            //if found delete it from database
+            await Post.findOneAndDelete({
+                _id: postId
+            })
+
+            //after delete update it into database
+            await Profile.findOneAndUpdate({
+                user: req.user._id
+            }, {
+                $pull: {
+                    'posts': postId
+                }
+            }, {
+                new: true
+            })
+
+            //showing flash messgae
+            req.flash('success', 'Post Deleted Successfully')
+            res.redirect('/explore') //render into profile Page
+        } else {
+
+
+            /**
+             * delete post using dummyId
+             */
+            let post = Post.findOne({
+                _id: postId
+            })
+
+            //if post not found throewing an error
+            if (!post) {
+                let error = new Error('404 Page Not Found')
+                error.status = 404
+                throw error
+            }
+
+            //if found delete it from database
+            await Post.findOneAndDelete({
+                _id: postId
+            })
+
+            //showing flash messgae
+            req.flash('success', 'Post Deleted Successfully')
+            res.redirect('/explore') //render into profile Page
         }
 
-        //if found delete it from database
-        await Post.findOneAndDelete({
-            _id: postId
-        })
 
-        //after delete update it into database
-        await Profile.findOneAndUpdate({
-            user: req.user._id
-        }, {
-            $pull: {
-                'posts': postId
-            }
-        }, {
-            new: true
-        })
-
-        //showing flash messgae
-        req.flash('success', 'Post Deleted Successfully')
-        res.redirect('/explore') //render into profile Page
 
     } catch (e) {
         // if error happened catch it
     }
+
+
+
 }
