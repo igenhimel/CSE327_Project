@@ -1,13 +1,18 @@
+const authRoute = require('../routes/authRoute')
 const postRoute = require('../routes/postRoute')
 const uploadRoutes = require('../routes/uploadRouter')
 const exploreRoute = require('../routes/exploreRoute')
 const apiRoute = require('../api/routes/apiRoute')
-const searchRoute = require('./searchRoute')
 /**
  * routes handling
  */
 const route =[
 
+    {
+        path:'/auth',
+        controller:authRoute   
+
+    },
 
     {
         path:'/posts',
@@ -20,12 +25,6 @@ const route =[
         controller:uploadRoutes // upload route
 
     },
-    {
-        path:'/search',
-        controller:searchRoute     // search route
- 
-    },
-
 
     {
         path:'/api',
