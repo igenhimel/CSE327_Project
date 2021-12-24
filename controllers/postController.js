@@ -8,6 +8,11 @@ const Post = require('../models/Post')
 const Profile = require('../models/Profile')
 const readingTime = require('reading-time')
 const mongoose = require('mongoose')
+const {
+    generateNames
+} = require('../public/scripts/generateName')
+const User = require('../models/User')
+
 
 
 /**
@@ -22,7 +27,7 @@ exports.createPostGet = (req, res, next) => {
         title: 'Create New Post',
         head: 'Write Anything You Want',
         flashMessage: {},
-        path: {},
+        path: 'createPost',
         error: {},
         value: {}
     })
@@ -60,7 +65,7 @@ exports.createPost = async (req, res, next) => {
             title: 'Create New Post',
             head: 'Write Anything You Want',
             flashMessage: Flash.getMessage(req),
-            path: {},
+            path: '{}',
             error: error.mapped(),
             value: {
                 text,
@@ -141,16 +146,34 @@ exports.createPost = async (req, res, next) => {
 
         } else {
 
+            let genName = generateNames()
+
+            let dummyUser = new User({
+                username: genName,
+                email: 'dummy@gmail.com',
+            })
+
+            let createDummyUser = await dummyUser.save()
+
             let dummyProfile = new Profile({
 
-                user:dummyId,
-                name:'Himel',
-                title:'demo',
-                bio:'demo'
-                
+                user: createDummyUser._id,
+                name: genName,
+                title: 'demo',
+                bio: 'demo'
+
             })
 
             let createDummyProfile = await dummyProfile.save()
+
+            await User.findOneAndUpdate({
+                _id: createDummyUser._id
+            }, {
+                $set: {
+                    profile: createDummyProfile._id
+                }
+            })
+
 
             /**
              * if request user not available then used dummy data
@@ -160,7 +183,7 @@ exports.createPost = async (req, res, next) => {
                 title,
                 body,
                 tags,
-                author: dummyId,
+                author: createDummyUser._id,
                 profile: createDummyProfile._id,
                 thumbnail: '',
                 readTime,
@@ -215,10 +238,9 @@ exports.editPostGetMethod = async (req, res, next) => {
         if (req.user) {
             //findout post is available or not
             let post = await Post.findOne({
-                    author: req.user._id,
-                    _id: postId
-                }
-            )
+                author: req.user._id,
+                _id: postId
+            })
 
             //if post is not available then it show page not found
             if (!post) {
