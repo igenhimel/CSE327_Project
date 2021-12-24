@@ -13,9 +13,27 @@
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px; }
 
+#explore i {
+  font-size: 20px; }
+
+.sec-nav {
+  position: sticky;
+  top: 58px;
+  z-index: 1010; }
+
+#modalbody input[type='text'], #modalbody textarea {
+  border-top: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent; }
+
 body {
   font-family: 'Oxygen', sans-serif;
-  background-color: lightcyan; }
+  background-image: url("/images/rm218batch4-ning-34.jpg");
+  background-position: left;
+  background-repeat: inherit;
+  background-size: inherit; }
 
 .bg {
   background-color: #0C1023; }
@@ -33,3 +51,78 @@ body {
 
 #searchContainer {
   background-color: aqua; }
+
+#explorePage {
+  background-image: url("/images/rm218batch4-ning-34.jpg");
+  background-position: left;
+  background-repeat: inherit;
+  background-size: inherit; }
+
+.postCard {
+  box-shadow: 2px 2px 6px -1px rgba(0, 0, 0, 0.3) !important; }
+
+.postUser {
+  position: absolute;
+  top: 80px;
+  left: 96px;
+  color: black; }
+
+#singlepost {
+  min-width: 90%; }
+  #singlepost .thumpic {
+    height: 700px; }
+
+#comment {
+  border-radius: 50px; }
+
+#comment:focus {
+  border-radius: 0px; }
+
+#reply {
+  border-radius: 50px; }
+
+.comment-user {
+  position: absolute;
+  left: 110px; }
+
+.reply-user {
+  position: absolute;
+  left: 185px; }
+
+.comment-body {
+  margin-top: 31px;
+  margin-bottom: 1rem; }
+
+@media only screen and (max-width: 992px) {
+  .navbar .search-btn {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: 100%; }
+  .navbar .search-bar {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 100%;
+    margin-bottom: 5px; }
+  .signup-title {
+    min-height: 200px !important; }
+  .signup-form {
+    min-height: 0px !important; }
+  #upload_pp {
+    width: 25% !important;
+    margin-bottom: 5px; } }
+
+@media only screen and (max-width: 576px) {
+  #signup .card {
+    width: 90% !important; }
+  #upload_pp {
+    width: 80% !important;
+    margin-bottom: 5px; }
+  .title-dis {
+    font-size: 40px; }
+  .searchwidth {
+    width: 90% !important; }
+  .comment-user {
+    font-size: 14px !important; }
+  .reply-user {
+    font-size: 14px !important; } }
+
