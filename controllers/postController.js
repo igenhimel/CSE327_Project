@@ -467,7 +467,7 @@ exports.deletePostController = async (req, res, next) => {
              */
             let post = Post.findOne({
                 _id: postId
-            })
+            }) 
 
             //if post not found throewing an error
             if (!post) {
