@@ -1,6 +1,7 @@
 const postRoute = require('../routes/postRoute')
 const uploadRoutes = require('../routes/uploadRouter')
-
+const exploreRoute = require('../routes/exploreRoute')
+const apiRoute = require('../api/routes/apiRoute')
 /**
  * routes handling
  */
@@ -17,6 +18,17 @@ const route =[
         path:'/uploads',
         controller:uploadRoutes // upload route
 
+    },
+
+    {
+        path:'/api',
+        controller:apiRoute
+
+    },
+
+    {
+        path:'/explore',
+        controller:exploreRoute
     },
  
     {
