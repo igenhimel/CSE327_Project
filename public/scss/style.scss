@@ -1,0 +1,159 @@
+.navbar .search-bar {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.navbar {
+    border-bottom: 2px solid lightblue;
+}
+
+.navbar .search-bar:focus {
+    outline: 0;
+    box-shadow: none!important;
+}
+
+.navbar .search-btn {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#propicPost {
+    position: relative;
+    top: 16px
+}
+
+body {
+    font-family: 'Oxygen', sans-serif;
+    background-image: url('/images/rm218batch4-ning-34.jpg');
+    background-position: left;
+    background-repeat: inherit;
+    background-size: inherit;
+}
+
+.bg {
+    background-color: #0C1023;
+}
+
+.alerts {
+    margin-top: 70px!important;
+}
+
+#profile {
+    label {
+        color: white;
+    }
+    #profilepic {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+    }
+    #upload_pp {
+        height: 44px!important;
+        padding: 7px!important;
+        border: none!important
+    }
+    max-width: 1300px!important;
+    .card-bg {
+        position: relative;
+        z-index: 1;
+    }
+    .img-thumbnail {
+        background-color: white;
+        border: white;
+        animation-name: example;
+        animation-duration: 6s;
+        animation-iteration-count: infinite;
+    }
+    @keyframes example {
+        0% {
+            background-color: white;
+            border: white;
+        }
+        25% {
+            background-color: yellow;
+            border: yellow;
+        }
+        50% {
+            background-color: deepskyblue;
+            border: deepskyblue;
+        }
+        100% {
+            background-color: lightcyan;
+            border: lightcyan;
+        }
+    }
+    .card-bg::before {
+        content: '';
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: lightcyan, $alpha: 0.5);
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+        top: 0;
+    }
+    #about {
+        input[type='text'],
+        input[type='email'],
+        input[type='text']:focus,
+        textarea {
+            border-top: 0!important;
+            border-left: 0!important;
+            border-right: 0!important;
+            border-bottom: 1px solid white!important;
+            background-color: transparent;
+            border-radius: 0!important;
+            outline: 0!important;
+            box-shadow: none!important;
+            color: white;
+        }
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .navbar .search-btn {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: 100%;
+    }
+    .navbar .search-bar {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .signup-title {
+        min-height: 200px!important;
+    }
+    .signup-form {
+        min-height: 0px!important;
+    }
+    #upload_pp {
+        width: 25%!important;
+        margin-bottom: 5px;
+    }
+}
+
+@media only screen and (max-width:576px) {
+    #signup .card {
+        width: 90%!important;
+    }
+    #upload_pp {
+        width: 80%!important;
+        margin-bottom: 5px;
+    }
+    .title-dis {
+        font-size: 40px;
+    }
+    .searchwidth {
+        width: 90%!important;
+    }
+    .comment-user {
+        font-size: 14px!important;
+    }
+    .reply-user {
+        font-size: 14px!important;
+    }
+}
