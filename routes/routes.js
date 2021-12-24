@@ -1,19 +1,17 @@
-const authRoutes = require('../routes/authRoute')
 const postRoute = require('../routes/postRoute')
-const dashboardRoutes = require('../routes/dashboardRoute')
-const searchRoute = require('./searchRoute')
 const uploadRoutes = require('../routes/uploadRouter')
 const exploreRoute = require('../routes/exploreRoute')
-
-    /**
-     * routes handling
-     */
-const route = [
+const apiRoute = require('../api/routes/apiRoute')
+/**
+ * routes handling
+ */
+const route =[
 
 
     {
-        path: '/auth',
-        controller: authRoutes
+        path:'/posts',
+        controller:postRoute     // posts route
+ 
     },
 
     {
@@ -34,37 +32,24 @@ const route = [
     },
  
     {
-        path: '/posts',
-        controller: postRoute // posts route
+        path:'/',
+        controller:(req,res)=>{
 
-    },
-
-    {
-        path: '/dashboard',
-        controller: dashboardRoutes
-
-    },
-    
-    {
-        path:'/search',
-        controller:searchRoute     // search route
- 
-    },
-
-    {
-        path: '/',
-        controller: (req, res) => {
-            res.redirect('/explore') // root path    
+            res.redirect('/explore')  // root path
+           
         }
     }
+
 ]
 
-module.exports = (app) => {
-    route.forEach((r) => {
-        if (r.path == '/') {
-            app.get(r.path, r.controller)
-        } else {
-            app.use(r.path, r.controller)
-        }
+
+module.exports = (app)=>{
+    route.forEach((r)=>{
+       if(r.path=='/'){
+           app.get(r.path,r.controller)
+       }
+       else{
+        app.use(r.path,r.controller)
+       }
     })
 }
