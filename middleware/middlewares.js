@@ -4,7 +4,7 @@ const session = require('express-session')
 const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash')
 const config = require('config')
-
+const {setLocals} = require('../middleware/setLocals')
 
 
 
@@ -29,7 +29,8 @@ const middleware = [
             maxAge: 1000* 60 * 60 *24 * 365
         }
     }),
-    flash()
+    flash(),
+    setLocals()
 ]
 
 module.exports = app =>{
