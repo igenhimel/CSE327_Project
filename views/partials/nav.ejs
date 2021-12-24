@@ -6,9 +6,17 @@
      </button>
  
      <div class="collapse navbar-collapse" id="navbarNav">
-       <ul class="navbar-nav mx-auto">   
-      
-        <li><a class=" text-decoration-none" href="/posts/createPost">Create Post</a></li>
+       <ul class="navbar-nav mx-auto">  
+
+        <li class="nav-item">
+          <a class="nav-link mr-3 ml-5 <%= path =='explore' ? 'active' : '' %>" href="/explore">Explore</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link mr-3 ml-5 <%= path =='createPost' ? 'active' : '' %>" href="/posts/createPost">Create Post</a>
+        </li>
+
+
          
        </ul>
  
