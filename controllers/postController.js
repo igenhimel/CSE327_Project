@@ -7,6 +7,13 @@ const cheerio = require('cheerio')
 const Post = require('../models/Post')
 const Profile = require('../models/Profile')
 const readingTime = require('reading-time')
+const mongoose = require('mongoose')
+const {
+    generateNames
+} = require('../public/scripts/generateName')
+const User = require('../models/User')
+
+
 
 
 /**
@@ -21,7 +28,7 @@ exports.createPostGet = (req, res, next) => {
         title: 'Create New Post',
         head: 'Write Anything You Want',
         flashMessage: {},
-        path: {},
+        path: 'createPost',
         error: {},
         value: {}
     })
@@ -59,7 +66,7 @@ exports.createPost = async (req, res, next) => {
             title: 'Create New Post',
             head: 'Write Anything You Want',
             flashMessage: Flash.getMessage(req),
-            path: {},
+            path: '{}',
             error: error.mapped(),
             value: {
                 text,
@@ -116,6 +123,71 @@ exports.createPost = async (req, res, next) => {
 
         let createNewPost = await post.save()
 
+        if (req.user) {
+            let createNewPost = await post.save()
+
+            /**
+             * Find user and upadte post into their profile
+             */
+            await Profile.findOneAndUpdate({
+                user: req.user._id
+            }, {
+                $push: {
+                    'posts': createNewPost._id
+                }
+            })
+            req.flash('success', 'Your Post have been Successfully Posted')
+            res.redirect(`/explore`)
+
+        } else {
+
+            let genName = generateNames()
+
+            let dummyUser = new User({
+                username: genName,
+                email: 'dummy@gmail.com',
+            })
+
+            let createDummyUser = await dummyUser.save()
+
+            let dummyProfile = new Profile({
+
+                user: createDummyUser._id,
+                name: genName,
+                title: 'demo',
+                bio: 'demo'
+
+            })
+
+            let createDummyProfile = await dummyProfile.save()
+
+            await User.findOneAndUpdate({
+                _id: createDummyUser._id
+            }, {
+                $set: {
+                    profile: createDummyProfile._id
+                }
+            })
+
+
+            /**
+             * if request user not available then used dummy data
+             */
+            let post = new Post({
+
+                title,
+                body,
+                tags,
+                author: createDummyUser._id,
+                profile: createDummyProfile._id,
+                thumbnail: '',
+                readTime,
+                likes: [],
+                dislikes: [],
+                comments: []
+
+
+
         /**
          * Find user and upadte post into their profile
          */
@@ -154,12 +226,66 @@ exports.editPostGetMethod = async (req, res, next) => {
             _id: postId
         })
 
+
         //if post is not available then it show page not found
         if (!post) {
             let error = new Error('404 Page Not Found')
             error.status = 404
             throw error
         }
+
+        if (req.user) {
+            //findout post is available or not
+            let post = await Post.findOne({
+                author: req.user._id,
+                _id: postId
+            })
+
+            //if post is not available then it show page not found
+            if (!post) {
+                let error = new Error('404 Page Not Found')
+                error.status = 404
+                throw error
+            }
+
+            //if post found render into edit post [age]
+            res.render('pages/dashboard/post/editPost', {
+                title: 'Edit Post',
+                head: 'Edit Your Post',
+                path: {},
+                flashMessage: Flash.getMessage(req),
+                post,
+                value: {},
+                error: {}
+
+            })
+
+        } else {
+
+            //findout post is available or not
+            let post = await Post.findOne({
+                    _id: postId
+                }
+
+            )
+
+            //if post is not available then it show page not found
+            if (!post) {
+                let error = new Error('404 Page Not Found')
+                error.status = 404
+                throw error
+            }
+
+            //if post found render into edit post [age]
+            res.render('pages/dashboard/post/editPost', {
+                title: 'Edit Post',
+                head: 'Edit Your Post',
+                path: {},
+                flashMessage: Flash.getMessage(req),
+                post,
+                value: {},
+                error: {}
+
 
         //if post found render into edit post [age]
         res.render('pages/dashboard/post/editPost', {
