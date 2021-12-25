@@ -1,0 +1,140 @@
+<%- include('../../partials/header.ejs') %>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Teko&display=swap" rel="stylesheet">
+<nav class="navbar navbar-dark navbar-expand-lg" id="explore">
+  <ul class="navbar-nav mx-auto">
+    <li class=" nav-item"><a class="nav-link text-dark" href="/explore?filter=recent"><i
+          class="fas fa-newspaper <%= filter=='recent'?'text-primary':'text-dark' %> "></i> Most Recent</a></li>
+    <li class=" nav-item"><a class="nav-link text-dark" href="/explore?filter=week"><i
+          class="fas fa-calendar-week <%= filter=='week'?'text-primary':'text-dark' %>"></i> Week</a></li>
+    <li class=" nav-item"><a class="nav-link text-dark" href="/explore?filter=month"><i
+          class="far fa-calendar-alt <%= filter=='month'?'text-primary':'text-dark' %>"></i> Month</a></li>
+    <li class=" nav-item"><a class="nav-link text-dark" href="/explore?filter=all"><i
+          class="fas fa-globe-asia <%= filter=='all'?'text-primary':'text-dark' %>"></i> All</a></li>
+  </ul>
+</nav>
+
+
+<div class="container">
+
+
+  <% if (posts.length==0) { %>
+
+  <div class="card mt-3">
+
+    <div class="card-body">
+      <h1 class="lead font-weight-bold text-warning text-center">No Post Available</h1>
+      <div class="text-center">
+        <strong>Create New Post! <a class=" text-decoration-none text-success"
+            href="/posts/createPost">Here</a></strong>
+      </div>
+    </div>
+
+  </div>
+
+  <% } %>
+</div>
+
+<section id="explorePage">
+  <div class="container">
+
+
+    <% if (posts.length>0) { %>
+    <h2 class="text-center p-4">Recent Posts</h2>
+
+    <% for(let post of posts){ %>
+
+    <div class="row d-lg-flex justify-content-lg-center align-items-lg-center">
+      <div class="col col-lg-7">
+        <div class="card mb-3 rounded postCard">
+
+
+
+          <div class="card-body">
+
+
+
+            <% if(user){%>
+            <img src="/uploads/default.jpg" alt="profile_pic"
+              class=" img-fluid img-thumbnail rounded-circle mt-4 mb-3 imguser" width="70px">
+            <%}else{%>
+            <img src="/uploads/default.jpg" alt="profile_pic"
+              class=" img-fluid img-thumbnail rounded-circle mt-4 mb-3 imguser" width="70px">
+
+            <% } %>
+            <span class="font-weight-bold text-secondary"><%if(user){%>
+              <a href="/author/<%=post.author._id %>"><%= post.profile.name %> </a>
+              <%}else{%>
+              <%=post.profile.name %>
+              <%}%>    
+                            </span>
+                            <div class="postUser">
+                                <small><%= moment(post.createdAt) %> <i class="fas fa-circle"></i> <%= post.readTime %>
+              </small>
+
+          </div>
+
+          <a href="/explore/<%= post._id %> " class=" text-decoration-none">
+            <h4 class="font-weight-bolder card-title text-muted"><%= post.title %> </h4>
+            <p class="text-dark"><%= truncate(post.body) %> </p>
+
+            <% if (post.thumbnail) { %>
+            <img src="<%= post.thumbnail %> " alt="" class=" card-img-top">
+            <% } %>
+          </a>
+        </div>
+
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+  <% } %>
+  <% } %>
+  </div>
+
+  <nav class="py-3" id='page'>
+    <ul class="pagination justify-content-center">
+
+      <li class="page-item prev <%= currentPage==1?'disabled':'' %> ">
+        <a class="page-link <%= currentPage==1?'text-muted':'text-dark' %> "
+          href="/explore?<%= `filter=${filter}&page=${currentPage-1}` %> ">Previous</a>
+      </li>
+
+      <% for(let i=1;i<=totalPage;i++){ %>
+
+      <li class="page-item item <%= currentPage==i?'active':'' %>  "><a class=" page-link"
+          href="/explore?<%=`filter=${filter}&page=${i}`%>"><%= i %>
+
+        </a></li>
+
+
+      <% } %>
+
+      <li class="page-item read-next <%= currentPage==totalPage?'disabled':'' %> ">
+        <a class="page-link <%= currentPage==totalPage?'text-muted':'text-dark' %>"
+          href="/explore?<%= `filter=${filter}&page=${currentPage+1}`%>">Read Next</a>
+      </li>
+
+    </ul>
+  </nav>
+
+</section>
+
+
+
+
+
+
+
+<%- include('../../partials/footer.ejs') %>
+
+
+</body>
+</head>
