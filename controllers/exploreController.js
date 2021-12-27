@@ -16,7 +16,6 @@ const {
 function genDate(days) {
 
     let date = moment().subtract(days, 'days') // subtract recent day to given day
-
     return date.toDate() // return date
 
 }
@@ -32,10 +31,9 @@ function filteringData(filter) {
 
     switch (filter) {
         case 'week':
-
             filterObj = {
                 createdAt: {
-                    $gt: genDate(7) // filtering post which posted 7 days ago
+                 $gt: genDate(7) // filtering post which posted 7 days ago
                 }
             }
             order = -1
