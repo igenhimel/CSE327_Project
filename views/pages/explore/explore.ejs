@@ -1,0 +1,74 @@
+<%- include('../../partials/header.ejs') %>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Teko&display=swap" rel="stylesheet">
+
+
+<section class="bg-white">
+  <div class="container">
+
+
+    <% if (posts.length>0) { %>
+    <h2 class="text-center p-4">Recent Posts</h2>
+    <div class="row d-lg-flex justify-content-lg-center align-items-lg-center">
+      <div class="col col-lg-7">
+        <div class="card mb-3 rounded postCard">
+
+          <% for(let post of posts){ %>
+
+
+          <div class="card-body">
+
+
+            <% if (user) { %>
+
+
+            <span class="bookmark" data-post="<%= post._id %> ">
+
+              <% if (bookmarks.includes(post._id)) { %>
+
+              <i class="fas fa-bookmark text-primary"></i>
+
+              <% } else{%>
+              <i class="far fa-bookmark"></i>
+
+              <% } %>
+            </span>
+
+
+            <% } %>
+
+
+
+
+            <h4 class="font-weight-bolder card-title text-muted"><%= post.title %> </h4>
+
+
+            <% if (post.thumbnail) { %>
+            <img src="<%= post.thumbnail %> " alt="" class=" card-img-top">
+            <% } %>
+            </a>
+          </div>
+
+
+
+
+          <% } %>
+          <% } %>
+        </div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<%- include('../../partials/footer.ejs') %>
+<script src="/scripts/bookmark.js"></script>
+
+
+</body>
+</head>
