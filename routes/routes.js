@@ -28,13 +28,13 @@ const route =[
 
     {
         path:'/api',
-        controller:apiRoute
+        controller:apiRoute //api route
 
     },
 
     {
         path:'/explore',
-        controller:exploreRoute
+        controller:exploreRoute //explore route
     },
  
     {
