@@ -11,6 +11,7 @@ exports.setLocals = () =>{
         res.locals.user = req.user
         res.locals.isLoggedIn = req.session.isLoggedIn
         res.locals.truncate = html =>{
+
             let node = cheerio.load(html) // cherrio html to text converter
             let text = node.text() // html to text convert
 
