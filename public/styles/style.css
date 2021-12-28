@@ -29,3 +29,9 @@ body {
     min-height: 600px; }
   #signup .card {
     width: 70%; }
+
+.bookmark {
+  position: absolute;
+  left: 0;
+  right: 15px;
+  text-align: end; }
