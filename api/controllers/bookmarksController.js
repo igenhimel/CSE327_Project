@@ -44,7 +44,6 @@ const User= require('../../models/User')
                 {$push:{'bookmarks':postId}},
                 {new:true}
             )
-            
 
             bookmarks=true
 
