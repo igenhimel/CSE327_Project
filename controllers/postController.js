@@ -46,9 +46,11 @@ exports.createPost = async (req, res, next) => {
     //error stored into this error variable
     let error = validationResult(req).formatWith(formatter)
 
+    //generate dummy name
+    let genName = generateNames()
+
     //console all types of error
     console.log(error.mapped())
-
     let {
         body,
         title,
@@ -84,13 +86,9 @@ exports.createPost = async (req, res, next) => {
 
     let readTime = readingTime(body).text //generating reading time
 
-    //dummy objectID
-    const dummyId = mongoose.Types.ObjectId();
-    const dummyIdProfile = mongoose.Types.ObjectId();
 
     /**
-     * check user has profile or not
-     * if request user available
+     * if request user and profile both available
      */
 
     if (req.user && profile) {
@@ -123,17 +121,16 @@ exports.createPost = async (req, res, next) => {
 
     }
 
-    /**
-     * create new post and stored into mongodb database
-     */
     try {
 
+
+         //if user and profile both are available
         if (req.user && profile) {
             let createNewPost = await post.save()
 
-            /**
-             * Find user and upadte post into their profile
-             */
+            
+             //Find user and upadte post into their profile
+             
             await Profile.findOneAndUpdate({
                 user: req.user._id
             }, {
@@ -145,21 +142,14 @@ exports.createPost = async (req, res, next) => {
             res.redirect(`/explore`)
 
         }
-
+         //only user is available
         if (req.user && !profile) {
 
-            let genName = generateNames()
-
-
-
-
             let dummyProfile = new Profile({
-
                 user: req.user._id,
                 name: genName,
                 title: 'demo',
                 bio: 'demo'
-
             })
 
             let createDummyProfile = await dummyProfile.save()
@@ -212,19 +202,21 @@ exports.createPost = async (req, res, next) => {
             res.redirect(`/explore`)
 
 
-        } else {
+        } 
+        
+        //if user and profile both are not available
+        else {
 
-            let genName = generateNames()
-
+            //create dummy user
             let dummyUser = new User({
                 username: genName,
                 email: 'dummy@gmail.com',
             })
 
-            let createDummyUser = await dummyUser.save()
+            let createDummyUser = await dummyUser.save() //create dummy user
 
+            //create dummy profile
             let dummyProfile = new Profile({
-
                 user: createDummyUser._id,
                 name: genName,
                 title: 'demo',
@@ -242,10 +234,6 @@ exports.createPost = async (req, res, next) => {
                 }
             })
 
-
-            /**
-             * if request user not available then used dummy data
-             */
             let post = new Post({
 
                 title,
