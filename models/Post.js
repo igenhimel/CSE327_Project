@@ -1,10 +1,11 @@
 const {Schema,model} =require('mongoose')
+
 /**
  * database model for Post
  */
 const PostSchema =new Schema({
- 
-    title:{ 
+
+    title:{
         type:String,
         trim:true,
         required:true
@@ -20,6 +21,7 @@ const PostSchema =new Schema({
         ref:'User',
         required:true
     },
+
     profile:{
 
         type:Schema.Types.ObjectId,
@@ -27,9 +29,11 @@ const PostSchema =new Schema({
         required:true
 
     },
+
     tags:{
         type:[String]
     },
+
     thumbnail:String,
     readTime:String,
 
@@ -37,6 +41,7 @@ const PostSchema =new Schema({
         type:Schema.Types.ObjectId,
         ref:'User'
     }],
+
     dislikes:[{
         type:Schema.Types.ObjectId,
         ref:'User'
@@ -49,10 +54,5 @@ const PostSchema =new Schema({
 
 },{timestamps:true})
 
-
-
-
-
 const Post =model("Post",PostSchema)
-
 module.exports = Post
