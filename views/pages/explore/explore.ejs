@@ -42,19 +42,18 @@
       <div class="col col-lg-7">
         <div class="card mb-3 rounded postCard">
           <div class="card-body">
-
             <!-- bookmarks ejs start -->
             <% if (user) { %>
-              <span class="bookmark" data-post="<%= post._id %> ">
-                <% if (bookmarks.includes(post._id)) { %>
-                <i class="fas fa-bookmark text-primary"></i>
-                <% } else{%>
-                <i class="far fa-bookmark"></i>
-                <% } %>
-              </span>
+            <span class="bookmark" data-post="<%= post._id %> ">
+              <% if (bookmarks.includes(post._id)) { %>
+              <i class="fas fa-bookmark text-primary"></i>
+              <% } else{%>
+              <i class="far fa-bookmark"></i>
               <% } %>
-              <!-- bookmarks ejs end -->
-              
+            </span>
+            <% } %>
+            <!-- bookmarks ejs end -->
+
             <% if(user){%>
             <img src="<%= user.profilePic%> " alt="profile_pic"
               class=" img-fluid img-thumbnail rounded-circle mt-4 mb-3 imguser" width="70px">
@@ -110,11 +109,6 @@
   </nav>
 
 </section>
-
-
-
-
-
 
 
 <%- include('../../partials/footer.ejs') %>
