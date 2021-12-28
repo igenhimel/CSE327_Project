@@ -60,10 +60,10 @@ const User= require('../../models/User')
 
         let createDummyProfile = await dummyProfile.save()
 
-        User.findOneAndUpdate({
+        await User.findOneAndUpdate({
             _id:req.user._id
         },{
-            $set:{'profile':createDummyProfile._id}
+            $set:{profile: createDummyProfile._id}
         })
 
         if(createDummyProfile.bookmarks.includes(postId)){
