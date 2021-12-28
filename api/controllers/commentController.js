@@ -17,25 +17,20 @@ const User = require('../../models/User')
  */
 exports.createCommentPost = async (req, res, next) => {
 
-    var {
-        postId
-    } = req.params //destructure post Id
-
-    var {
-        body
-    } = req.body // destructure comment body
+    let {postId} = req.params //destructure post Id
+    let {body} = req.body // destructure comment body
 
     try {
 
+        //if user and profile both available
         if (req.user && req.user.profile) {
-
 
             let comment = new Comment({
                 post: postId,
                 user: req.user._id,
                 body,
                 replies: []
-            }) //if request user available
+            }) 
 
             let createdComment = await comment.save() // new comment saved into database
 
@@ -65,10 +60,10 @@ exports.createCommentPost = async (req, res, next) => {
 
         }
 
+        //if user available but profile not available
         if (req.user && !req.user.profile) {
-            /**
-             * dummy username function called
-             */
+
+            //dummy username function called
             let genName = generateNames()
 
             //created dummy Profile
@@ -80,6 +75,7 @@ exports.createCommentPost = async (req, res, next) => {
 
             })
 
+            //create dummy profile
             let createDummyProfile = await dummyProfile.save()
 
             await User.findOneAndUpdate({
@@ -90,7 +86,7 @@ exports.createCommentPost = async (req, res, next) => {
                 }
             }) //dummy profile updated into dummy user
 
-
+            
             let comment = new Comment({
                 post: postId,
                 user: req.user._id,
@@ -125,10 +121,14 @@ exports.createCommentPost = async (req, res, next) => {
                 })
 
             return res.status(201).json(commentJSON)
-        } else {
-            /**
-             * dummy username function called
-             */
+
+        } 
+        
+        //if user and profile both not available
+        else {
+            
+            
+            //dummy username function called
             let genName = generateNames()
 
             let dummyUser = new User({
@@ -217,18 +217,12 @@ exports.createCommentPost = async (req, res, next) => {
  */
 exports.repliesPostController = async (req, res, next) => {
 
-    let {
-        commentId
-    } = req.params //destructure comment ID
+    let {commentId} = req.params //destructure comment ID
+    let {body} = req.body // destructure replies body
 
-    let {
-        body
-    } = req.body // destructure replies body
+       try {
 
-
-    try {
-
-        //if user is available
+        //if user and profile is available
         if (req.user && req.user.profile) {
             let reply = {
                 user: req.user._id,
@@ -259,11 +253,12 @@ exports.repliesPostController = async (req, res, next) => {
 
         }
 
-        if (req.user && !req.user.profile) {
             /**
-             * if user not available use dummy data
+             * if user available but profile not then use dummy data
              * generate dummy user and profile from geneerateName()
              */
+        if (req.user && !req.user.profile) {
+            
             let genName = generateNames()
 
             //dummy profile object created
@@ -286,8 +281,6 @@ exports.repliesPostController = async (req, res, next) => {
                     profile: createDummyProfile._id
                 }
             })
-
-
 
             let reply = {
                 user: req.user._id,
@@ -314,12 +307,15 @@ exports.repliesPostController = async (req, res, next) => {
                 name: profile.name
             })
 
-        } else {
-
-            /**
-             * if user not available use dummy data
+        }
+        
+           /**
+             * if user and profile both not available use dummy data
              * generate dummy user and profile from geneerateName()
              */
+        else {
+
+         
             let genName = generateNames()
 
             let dummyUser = new User({
