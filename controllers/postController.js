@@ -151,7 +151,7 @@ exports.createPost = async (req, res, next) => {
 
             let dummyProfile = new Profile({
                 user: req.user._id,
-                name: genName,
+                name: req.user.username,
                 title: 'demo',
                 bio: 'demo'
             })
