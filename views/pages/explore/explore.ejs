@@ -55,7 +55,7 @@
 
 
             <% if(user){%>
-            <img src="/uploads/default.jpg" alt="profile_pic"
+            <img src="<%=post.author.profilePic%>" alt="profile_pic"
               class=" img-fluid img-thumbnail rounded-circle mt-4 mb-3 imguser" width="70px">
             <%}else{%>
             <img src="/uploads/default.jpg" alt="profile_pic"
