@@ -1,7 +1,7 @@
 {
     "plugins": ["plugins/markdown"],
     "source": {
-        "include":["controllers","routes","middleware"],
+        "include":["controllers","middleware","api/controllers","public/scripts","utils","validators","validators/post"],
         "includePattern": ".js$",
         "excludePattern": "(node_modules/|docs)"
     },
