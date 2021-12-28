@@ -1,4 +1,6 @@
 const authRoutes = require('../routes/authRoute')
+const apiRoute = require ('../api/routes/apiRoute')
+const dashboardRoutes = require('../routes/dashboardRoute')
 
 
 const route = [
@@ -7,7 +9,20 @@ const route = [
         path:'/auth',
         controller:authRoutes
     },
+    
+    {
+        path:'/api',
+        controller:apiRoute
+
+    },
+
+    
+    {
+        path:'/dashboard',
+        controller:dashboardRoutes
+    },
   
+
     {
         path:'/',
         controller:(req,res)=>{
