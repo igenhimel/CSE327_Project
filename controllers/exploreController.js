@@ -94,6 +94,18 @@ exports.exploreController = async (req, res, next) => {
             .sort(order == 1 ? '-createdAt' : 'createdAt') //sorting post
             .populate('profile', 'name username profilePic') // populating name,username and profilePic from Profile Model
 
+            
+            let bookmarks = [] //empty array
+            if(req.user){
+             
+            let profile = await Profile.findOne({user:req.user._id})
+    
+            if(profile){
+                bookmarks = profile.bookmarks
+            }      //if profile then bookmarks icon can be show in explore page
+    
+        }
+
 
         res.render('pages/explore/explore', {
             title: 'Explore The World',
@@ -103,7 +115,8 @@ exports.exploreController = async (req, res, next) => {
             posts,
             itemPerPage,
             currentPage,
-            totalPage
+            totalPage,
+            bookmarks
         }) //response render to the explore page 
 
     } catch (e) {
