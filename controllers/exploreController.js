@@ -92,7 +92,7 @@ exports.exploreController = async (req, res, next) => {
             .skip((currentPage * itemPerPage) - itemPerPage) // skip previous page post
             .limit(itemPerPage) // limit post per page = 2
             .sort(order == 1 ? '-createdAt' : 'createdAt') //sorting post
-            .populate('profile', 'name username profilePic') // populating name,username and profilePic from Profile Model
+            .populate('author profile','name username profilePic') // populating name,username and profilePic from Profile Model
 
             
             let bookmarks = [] //bookmarks empty array
