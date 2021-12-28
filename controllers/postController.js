@@ -91,11 +91,15 @@ exports.createPost = async (req, res, next) => {
      * if request user and profile both available
      */
 
-    if (req.user && profile) {
-
+    
+    if(req.user){
         var profile = await Profile.findOne({
             user: req.user._id
         })
+    }
+
+    if (req.user && profile) {
+
 
         //save new post into mongoDB server
         var post = new Post({
@@ -139,7 +143,7 @@ exports.createPost = async (req, res, next) => {
                 }
             })
             req.flash('success', 'Your Post have been Successfully Posted')
-            res.redirect(`/explore`)
+           return res.redirect(`/explore`)
 
         }
          //only user is available
@@ -199,7 +203,7 @@ exports.createPost = async (req, res, next) => {
                 }
             })
             req.flash('success', 'Your Post have been Successfully Posted')
-            res.redirect(`/explore`)
+           return res.redirect(`/explore`)
 
 
         } 
