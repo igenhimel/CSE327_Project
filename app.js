@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require('express')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose') 
 const setRoutes = require('./routes/routes')
 const setMiddleWare = require('./middleware/middlewares')
 const config = require('config')
@@ -50,6 +50,7 @@ const PORT = process.env.PORT || 3030
 
 /**
  * database connection
+ * it will return a promise also
  */
 
 mongoose.connect(MONGODB_URI,{useNewUrlParser:true
