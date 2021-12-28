@@ -4,9 +4,9 @@ const {Schema,model} = require('mongoose')
  * it is a user model
  */
 
-const UserSchema = new Schema({
-
-    username : {
+const UserSchema =  new Schema({
+    // 6 properties available
+    username : { 
         type: String,
         trim: true,
         maxlength: 15,

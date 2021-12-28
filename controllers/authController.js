@@ -1,5 +1,5 @@
-let User = require('../models/User')
-let bcrypt = require('bcrypt')
+let User = require('../models/User') //User model is importing
+let bcrypt = require('bcrypt') // it's a library which will use for hasing
 const {
   validationResult
 } = require('express-validator')
@@ -41,7 +41,7 @@ exports.signUpGetController = (req, res, next) => {
 
 exports.signUpPostController = async (req, res, next) => {
 
-
+//destructuring username,email,password from body
   let {
     username,
     email,
@@ -71,16 +71,19 @@ exports.signUpPostController = async (req, res, next) => {
 
 
   try {
-
-    let hashPassword = await bcrypt.hash(password, 11) // encrypted password 
+//we will encrypt the pass and will encrypt 11 times. promise handled by await 
+    let hashPassword = await bcrypt.hash(password, 11) // encrypted password and 11 times encrypted
 //user data save into mongodb database
     let user = new User({
       username,
       email,
-      password: hashPassword
+      password: hashPassword // pass replaced by hashPass
     })
 
+   
     await user.save()  
+
+    
     req.flash('success', 'Please Login To Your Account')
     res.redirect('/auth/login')
 
