@@ -1,6 +1,5 @@
 const Profile = require('../../models/Profile')
 const Post = require('../../models/Post')
-const User= require('../../models/User')
 
 /**
  * api method for bookmarks post
