@@ -27,7 +27,7 @@ exports.setLocals = () =>{
         }
         res.locals.moment = time => moment(time).fromNow() //locally declare momentJS variable to access from view
         next()
-
+        
     }
 }
 
