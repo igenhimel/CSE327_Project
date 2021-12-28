@@ -13,12 +13,15 @@
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px; }
 
+  
 body {
   font-family: 'Oxygen', sans-serif;
   background-color: lightcyan; }
 
+
 .bg {
   background-color: #0C1023; }
+
 
 #signup {
   min-height: 600px;
@@ -30,6 +33,7 @@ body {
   #signup .card {
     width: 70%; }
 
+ 
 #searchContainer {
   background-color: aqua; }
 
@@ -77,6 +81,15 @@ body {
   min-width: 90%; }
   #singlepost .thumpic {
     height: 700px; }
+
+    
+.bookmark {
+  position: absolute;
+  left: 0;
+  right: 15px;
+  text-align: end; }
+
+
 
 #comment {
   border-radius: 50px; }

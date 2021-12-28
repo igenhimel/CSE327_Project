@@ -25,6 +25,7 @@
    
 }
 
+
 .bg{
 background-color: #0C1023;
 
@@ -43,6 +44,8 @@ background-color: #0C1023;
         width: 70%;
     }
 }
+
+
 
 #searchContainer{
     background-color: aqua;
@@ -69,7 +72,6 @@ background-color: #0C1023;
            border-radius: 0!important;
            background-color: transparent;
        }
-   
      
    }
 
@@ -103,6 +105,7 @@ background-color: #0C1023;
     color: black;
 }
 
+
 #singlepost{
 
     min-width: 90%;
@@ -113,6 +116,13 @@ background-color: #0C1023;
     }
 
 
+}
+
+.bookmark{
+    position: absolute;
+    left: 0;
+    right: 15px;
+    text-align: end;
 }
 
 
@@ -207,4 +217,6 @@ background-color: #0C1023;
        }
    }
    
+
+
 
