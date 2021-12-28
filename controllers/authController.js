@@ -81,23 +81,9 @@ exports.signUpPostController = async (req, res, next) => {
     })
 
    
-    let createUser= await user.save()  
+    await user.save()  
 
-    let dummyProfile = new Profile({
-      name:createUser.username,
-      title:'abc',
-      bio:'abc',
-      user:createUser._id
-    })
-
-    let createDummyProfile= await dummyProfile.save()
-
-    await User.findByIdAndUpdate({
-      _id:createUser._id
-    },{
-      $set:{'profile': createDummyProfile._id}
-    })
-
+    
     req.flash('success', 'Please Login To Your Account')
     res.redirect('/auth/login')
 
