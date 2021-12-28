@@ -128,7 +128,7 @@ exports.createPost = async (req, res, next) => {
      */
     try {
 
-        if (req.user) {
+        if (profile) {
             let createNewPost = await post.save()
 
             /**
