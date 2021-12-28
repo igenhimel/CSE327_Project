@@ -54,22 +54,18 @@
 
 
 
-            <% if(user){%>
+
             <img src="<%=post.author.profilePic%>" alt="profile_pic"
               class=" img-fluid img-thumbnail rounded-circle mt-4 mb-3 imguser" width="70px">
-            <%}else{%>
-            <img src="/uploads/default.jpg" alt="profile_pic"
-              class=" img-fluid img-thumbnail rounded-circle mt-4 mb-3 imguser" width="70px">
 
-            <% } %>
             <span class="font-weight-bold text-secondary"><%if(user){%>
               <a href="/author/<%=post.author._id %>"><%= post.profile.name %> </a>
               <%}else{%>
               <%=post.profile.name %>
               <%}%>    
-                            </span>
-                            <div class="postUser">
-                                <small><%= moment(post.createdAt) %> <i class="fas fa-circle"></i> <%= post.readTime %>
+            </span>
+                <div class="postUser">
+              <small><%= moment(post.createdAt) %> <i class="fas fa-circle"></i> <%= post.readTime %>
               </small>
 
           </div>
