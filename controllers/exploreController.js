@@ -95,7 +95,7 @@ exports.exploreController = async (req, res, next) => {
             .populate('profile', 'name username profilePic') // populating name,username and profilePic from Profile Model
 
             
-            let bookmarks = [] //empty array
+            let bookmarks = [] //bookmarks empty array
             if(req.user){
              
             let profile = await Profile.findOne({user:req.user._id})
