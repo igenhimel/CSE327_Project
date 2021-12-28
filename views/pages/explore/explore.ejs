@@ -19,9 +19,7 @@
 
 
   <% if (posts.length==0) { %>
-
   <div class="card mt-3">
-
     <div class="card-body">
       <h1 class="lead font-weight-bold text-warning text-center">No Post Available</h1>
       <div class="text-center">
@@ -29,9 +27,7 @@
             href="/posts/createPost">Here</a></strong>
       </div>
     </div>
-
   </div>
-
   <% } %>
 </div>
 
@@ -41,26 +37,30 @@
 
     <% if (posts.length>0) { %>
     <h2 class="text-center p-4">Recent Posts</h2>
-
     <% for(let post of posts){ %>
-
     <div class="row d-lg-flex justify-content-lg-center align-items-lg-center">
       <div class="col col-lg-7">
         <div class="card mb-3 rounded postCard">
-
-
-
           <div class="card-body">
 
-
-
+            <!-- bookmarks ejs start -->
+            <% if (user) { %>
+              <span class="bookmark" data-post="<%= post._id %> ">
+                <% if (bookmarks.includes(post._id)) { %>
+                <i class="fas fa-bookmark text-primary"></i>
+                <% } else{%>
+                <i class="far fa-bookmark"></i>
+                <% } %>
+              </span>
+              <% } %>
+              <!-- bookmarks ejs end -->
+              
             <% if(user){%>
             <img src="/uploads/default.jpg" alt="profile_pic"
               class=" img-fluid img-thumbnail rounded-circle mt-4 mb-3 imguser" width="70px">
             <%}else{%>
             <img src="/uploads/default.jpg" alt="profile_pic"
               class=" img-fluid img-thumbnail rounded-circle mt-4 mb-3 imguser" width="70px">
-
             <% } %>
             <span class="font-weight-bold text-secondary"><%if(user){%>
               <a href="/author/<%=post.author._id %>"><%= post.profile.name %> </a>
@@ -71,30 +71,18 @@
                             <div class="postUser">
                                 <small><%= moment(post.createdAt) %> <i class="fas fa-circle"></i> <%= post.readTime %>
               </small>
-
           </div>
-
           <a href="/explore/<%= post._id %> " class=" text-decoration-none">
             <h4 class="font-weight-bolder card-title text-muted"><%= post.title %> </h4>
             <p class="text-dark"><%= truncate(post.body) %> </p>
-
             <% if (post.thumbnail) { %>
             <img src="<%= post.thumbnail %> " alt="" class=" card-img-top">
             <% } %>
           </a>
         </div>
-
-
-
       </div>
-
     </div>
   </div>
-
-
-
-
-
   <% } %>
   <% } %>
   </div>
@@ -108,13 +96,9 @@
       </li>
 
       <% for(let i=1;i<=totalPage;i++){ %>
-
       <li class="page-item item <%= currentPage==i?'active':'' %>  "><a class=" page-link"
           href="/explore?<%=`filter=${filter}&page=${i}`%>"><%= i %>
-
         </a></li>
-
-
       <% } %>
 
       <li class="page-item read-next <%= currentPage==totalPage?'disabled':'' %> ">
