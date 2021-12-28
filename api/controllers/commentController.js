@@ -27,7 +27,7 @@ exports.createCommentPost = async (req, res, next) => {
 
     try {
 
-        if (req.user) {
+        if (req.user && req.user.profile) {
 
 
             let comment = new Comment({
@@ -63,6 +63,68 @@ exports.createCommentPost = async (req, res, next) => {
 
             return res.status(201).json(commentJSON) // response return
 
+        }
+
+        if (req.user && !req.user.profile) {
+            /**
+             * dummy username function called
+             */
+            let genName = generateNames()
+
+            //created dummy Profile
+            let dummyProfile = new Profile({
+                user: req.user._id,
+                name: genName,
+                title: 'demo',
+                bio: 'demo'
+
+            })
+
+            let createDummyProfile = await dummyProfile.save()
+
+            await User.findOneAndUpdate({
+                _id: req.user._id
+            }, {
+                $set: {
+                    profile: createDummyProfile._id
+                }
+            }) //dummy profile updated into dummy user
+
+
+            let comment = new Comment({
+                post: postId,
+                user: req.user._id,
+                body,
+                replies: []
+            }) // new comment objected created
+
+            let createdComment = await comment.save() //comment save
+
+            /**
+             * dummy comment saved into database
+             */
+            await Post.findOneAndUpdate({
+                _id: postId
+            }, {
+                $push: {
+                    'comments': createdComment._id
+                }
+            })
+
+            let commentJSON = await Comment.findById(createdComment._id)
+                .populate({
+                    path: 'user',
+                    select: 'profilePic username'
+                })
+                .populate({
+                    path: 'user',
+                    populate: {
+                        path: 'profile',
+                        select: 'name'
+                    }
+                })
+
+            return res.status(201).json(commentJSON)
         } else {
             /**
              * dummy username function called
@@ -167,7 +229,7 @@ exports.repliesPostController = async (req, res, next) => {
     try {
 
         //if user is available
-        if (req.user) {
+        if (req.user && req.user.profile) {
             let reply = {
                 user: req.user._id,
                 body
@@ -194,6 +256,63 @@ exports.repliesPostController = async (req, res, next) => {
                 name: profile.name
             })
 
+
+        }
+
+        if (req.user && !req.user.profile) {
+            /**
+             * if user not available use dummy data
+             * generate dummy user and profile from geneerateName()
+             */
+            let genName = generateNames()
+
+            //dummy profile object created
+            let dummyProfile = new Profile({
+
+                user: req.user._id,
+                name: genName,
+                title: 'demo',
+                bio: 'demo'
+
+            })
+
+            let createDummyProfile = await dummyProfile.save()
+
+            //dummy replies
+            await User.findOneAndUpdate({
+                _id: req.user._id
+            }, {
+                $set: {
+                    profile: createDummyProfile._id
+                }
+            })
+
+
+
+            let reply = {
+                user: req.user._id,
+                body
+            }
+
+            //dummy replies push into comment body
+            await Comment.findOneAndUpdate({
+                _id: commentId
+            }, {
+                $push: {
+                    'replies': reply
+                }
+            })
+
+            let profile = await Profile.findOne({
+                user: req.user._id
+            })
+
+            //response back to the user
+            return res.status(201).json({
+                ...reply,
+                profilePic: req.user.profilePic,
+                name: profile.name
+            })
 
         } else {
 

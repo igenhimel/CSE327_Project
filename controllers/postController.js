@@ -93,7 +93,7 @@ exports.createPost = async (req, res, next) => {
      * if request user available
      */
 
-    if (req.user) {
+    if (req.user && profile) {
 
         var profile = await Profile.findOne({
             user: req.user._id
@@ -128,7 +128,7 @@ exports.createPost = async (req, res, next) => {
      */
     try {
 
-        if (profile) {
+        if (req.user && profile) {
             let createNewPost = await post.save()
 
             /**
@@ -143,6 +143,74 @@ exports.createPost = async (req, res, next) => {
             })
             req.flash('success', 'Your Post have been Successfully Posted')
             res.redirect(`/explore`)
+
+        }
+
+        if (req.user && !profile) {
+
+            let genName = generateNames()
+
+
+
+
+            let dummyProfile = new Profile({
+
+                user: req.user._id,
+                name: genName,
+                title: 'demo',
+                bio: 'demo'
+
+            })
+
+            let createDummyProfile = await dummyProfile.save()
+
+            await User.findOneAndUpdate({
+                _id: req.user._id
+            }, {
+                $set: {
+                    profile: createDummyProfile._id
+                }
+            })
+
+
+            /**
+             * if request user not available then used dummy data
+             */
+            let post = new Post({
+
+                title,
+                body,
+                tags,
+                author: req.user._id,
+                profile: createDummyProfile._id,
+                thumbnail: '',
+                readTime,
+                likes: [],
+                dislikes: [],
+                comments: []
+
+
+            })
+
+            //if request file available
+            if (req.file) {
+                post.thumbnail = `/uploads/${req.file.filename}`
+            }
+
+            let createNewPost = await post.save()
+
+            /**
+             * Find user and upadte post into their profile
+             */
+
+            await Profile.findOneAndUpdate({
+                $push: {
+                    'posts': createNewPost._id
+                }
+            })
+            req.flash('success', 'Your Post have been Successfully Posted')
+            res.redirect(`/explore`)
+
 
         } else {
 
