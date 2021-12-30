@@ -6,7 +6,7 @@ const Post = require('../models/Post')
  * @param {object} res Response object of the postSearch method of controller
  */
 exports.postSearch = async(req,res) => {
-    let searchTerm = req.query.term;
+    let searchTerm = req.query.term; 
     let post = await Post.find({$text:{ $search: searchTerm, $diacriticSensitive: true}});
-    res.render('../views/pages/explore/search', {value: searchTerm, post})
+    res.render('pages/explore/search', {value: searchTerm, post} )
 }
