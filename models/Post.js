@@ -54,5 +54,7 @@ const PostSchema =new Schema({
 
 },{timestamps:true})
 
+PostSchema.index({ title: 'text', body: 'text'}); // Indexing to search post on the blog.
+
 const Post =model("Post",PostSchema)
 module.exports = Post
