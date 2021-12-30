@@ -11,7 +11,7 @@
 
                 <div class="offset-2 offset-sm-0 col-lg-4">
 
-                    <img src="#" alt="default" class="  img-fluid img-thumbnail" id="profilepic" name="defaultprofile">
+                    <img src="/images/default.jpg" alt="default" class="  img-fluid img-thumbnail" id="profilepic" name="defaultprofile">
                     <div class="ml-5">
                         <span class="text-light">@</span>
                     </div>
@@ -39,7 +39,7 @@
                         <div class="card-body card-bg">
 
 
-                            <form action="/dashboard/createProfile" method="POST" id="myprofile">
+                            <form action="/profile/createProfile" method="POST" id="myprofile">
                                 <div id="about">
 
                                     <div class="row">
@@ -47,7 +47,7 @@
                                             <div class="form-group">
 
                                                 <label for="name" class=" form-label">Your Full Name</label>
-                                                <input type="text" class="form-control " name="name" placeholder="Full Name" value="<%= person.name%>">
+                                                <input type="text" class="form-control " name="name" placeholder="Full Name" value="">
 
                                                 <div class="invalid-feedback text-warning">
 
