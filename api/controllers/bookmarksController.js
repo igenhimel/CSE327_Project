@@ -7,7 +7,7 @@ const User= require('../../models/User')
  * @param {object} req request object of the bookmarksController method of bookmarksController
  * @param {object} res response object of the bookmarksController method of bookmarksController
  * @param {object} next next object of the bookmarksController method of bookmarksController
- * @returns 
+ * @returns return response status code 200 
  */
 
  exports.bookmarksController = async (req,res,next)=>{

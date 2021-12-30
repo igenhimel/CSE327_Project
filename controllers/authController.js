@@ -122,11 +122,11 @@ exports.loginGetController = (req, res, next) => {
  * @param {object} req request object of the loginPostController method of authController 
  * @param {object} res response object of the loginPostController method of authController 
  * @param {object} next next object of the loginPostController method of authController 
- * @returns 
+ * @returns  if login unsuccessful return to the login page or if login successful return to the profile page
  */
 exports.loginPostController = async (req, res, next) => {
 
-  let {
+  let {   
     email,
     password
   } = req.body  // data destructure from request body
@@ -148,14 +148,14 @@ exports.loginPostController = async (req, res, next) => {
       })
 
     }
-
+//if user's password match with database password then match value true otherwise false
     let match = await bcrypt.compare(password, user.password) //compare password 
 
-    if (!match) {
+    if (!match) {  //if password not match
       req.flash('fail', 'Authentication Failed!')
       let myError = {}
       myError.password = 'Incorrect Username Or Password'
-      return res.render('pages/auth/login', {
+      return res.render('pages/auth/login', { 
         title: 'Log In To Your Account',
         path: 'logpath',
         error: {},
