@@ -1,9 +1,16 @@
 const searchRoute = require('./searchRoute')
+const profileViewRoute = require('./profileViewRoute')
+
 /**
  * routes handling
  */
 const route =[
 
+    {
+        path:'/views',
+        controller:profileViewRoute     // profile view route
+ 
+    },
 
     {
         path:'/search',
@@ -11,7 +18,7 @@ const route =[
  
     },
 
- 
+
     {
         path:'/',
         controller:(req,res)=>{
