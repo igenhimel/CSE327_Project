@@ -4,7 +4,7 @@ const dashRouter = require('express').Router()
 const {
   
   
-    BookmarksGetController
+    bookmarksGetController
 
 } = require('../controllers/dashboardController')
 
@@ -17,7 +17,7 @@ const {
 
 
 
-dashRouter.get('/bookmarks',isAuthenticated,BookmarksGetController)
+dashRouter.get('/bookmarks',isAuthenticated,bookmarksGetController)
 
 
 module.exports=dashRouter
