@@ -7,7 +7,7 @@ const Flash = require('../utils/Flash')
  * @param {object} res response object of the BookmarksGetController method of dashboardController
  * @param {object} next next object of the BookmarksGetController method of dashboardController
  */
-exports.BookmarksGetController = async(req,res,next)=>{
+exports.bookmarksGetController = async(req,res,next)=>{
     try{
 
         let profile = await Profile.findOne({user:req.user._id})
