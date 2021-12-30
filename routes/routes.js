@@ -37,6 +37,12 @@ const route =[
     },
 
     {
+        path:'/search',
+        controller:searchRoute     // search route
+ 
+    },
+
+    {
         path: '/dashboard',
         controller: dashboardRoutes
     },
