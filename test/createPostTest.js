@@ -3,9 +3,6 @@ var server = require('../app');
 var request = require('supertest');
 var app = request.agent(server);
 
-
-
-
 /**
  * expected status code 200 for loading create post page
  */
