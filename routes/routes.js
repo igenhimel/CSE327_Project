@@ -1,13 +1,6 @@
-const dashboardRoutes = require('../routes/dashboardRoute')
-const profileRoute = require("../routes/CreateProfile")
+const profileRoute = require("../routes/ProfileRoute")
 const route = [
 
-
-    {
-        path: '/dashboard',
-        controller: dashboardRoutes
-
-    },
     {
         path: "/profile",
         controller: profileRoute
