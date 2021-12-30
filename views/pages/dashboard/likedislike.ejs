@@ -1,0 +1,31 @@
+<%- include('../../partials/header.ejs') %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" integrity="sha512-2eMmukTZtvwlfQoG8ztapwAH5fXaQBzaMqdljLopRSA0i6YKM8kBAOrSSykxu9NN9HrtD45lIqfONLII2AFL/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <div class="bg">
+        <h1 class="display-4 text-light text-center title-dis">
+            <%= title %>
+        </h1>
+        <div class="container">
+            <img src="">
+
+            <div class="likedislike">
+                <button id="likebtn">
+                    <i class="fa fa-thumbs-up"></i>
+                </button>
+                <input type="number" id="input1" value="0" name="">
+
+                <button id="dislikebtn">
+                    <i class="fa fa-thumbs-down"></i>
+                </button>
+                <input type="number" id="input2" value="0" name="">
+            </div>
+        </div>
+
+        <%- include('../../partials/footer.ejs') %>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js" integrity="sha512-Gs+PsXsGkmr+15rqObPJbenQ2wB3qYvTHuJO6YJzPe/dTLvhy0fmae2BcnaozxDo5iaF8emzmCZWbQ1XXiX2Ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="/scripts/upload.js"></script>
+
+
+            </body>
+
+            </html>
