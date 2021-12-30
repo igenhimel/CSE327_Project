@@ -1,12 +1,18 @@
 <%- include('../../partials/header.ejs') %>
 
-<%- include('../../partials/nav.ejs') %> 
-    <div class="container"  id ="container">
+    <div class="searchContainer"  id ="searchContainer">
+        <div class="results"><h1> Search results for <%= value %></h1></div>
         <% if (post.length > 0) { %>
             <% post.forEach(post => { %> 
-                <div class="box"> 
-                <h3><%= post.title%></h3>
-                <p><%= post.body%> </p>
+                <div class="row">
+                    <div class="col d-flex justify-content-center align-items-center">
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="/explore/<%= post._id %>"> <%= post.title %> </a>
+                            </div>
+                            <img src="<%= post.thumbnail?post.thumbnail:'' %>" alt="Post thumbnail" class="img-fluid">
+                        </div>
+                    </div>
                 </div>
                 <%})%>
 
