@@ -7,7 +7,7 @@ const config = require('config')
 
 
 
-const MONGODB_URI = `mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/diary`
+const MONGODB_URI = `mongodb+srv://${config.get('db-admin')}:${config.get('db-password')}@cluster0.13eyw.mongodb.net/CSE327`
 
 const store = new MongoDBStore({
     uri: MONGODB_URI,
