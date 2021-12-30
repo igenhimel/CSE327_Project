@@ -8,5 +8,5 @@ const Post = require('../models/Post')
 exports.postSearch = async(req,res) => {
     let searchTerm = req.query.term; 
     let post = await Post.find({$text:{ $search: searchTerm, $diacriticSensitive: true}});
-    res.render('pages/explore/search', {value: searchTerm, post, title: 'Search'} )
+    res.render('pages/explore/search', {value: searchTerm, post, title: 'Search', path:{}, flashMessage:{} } )
 }
