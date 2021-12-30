@@ -4,6 +4,9 @@ const uploadRoutes = require('../routes/uploadRouter')
 const exploreRoute = require('../routes/exploreRoute')
 const apiRoute = require('../api/routes/apiRoute')
 const dashboardRoutes = require('../routes/dashboardRoute')
+const searchRoute = require('./searchRoute')
+
+
 /**
  * routes handling
  */
@@ -43,6 +46,7 @@ const route =[
         controller:exploreRoute //explore route
     },
  
+
     {
         path:'/',
         controller:(req,res)=>{
